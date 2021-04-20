@@ -85,8 +85,11 @@ public class MyGLSurfaceView extends GLSurfaceView {
         On suppose que l'écran correspond à un carré d'arête 2 centré en 0
          */
 
-        float x_opengl = 20.0f*x/getWidth() - 10.0f;
-        float y_opengl = -20.0f*y/getHeight() + 10.0f;
+        float get_width=getWidth()/100.0f;
+        float get_heigth=getHeight()/100.0f;
+
+        float x_opengl = 2*get_width*x/getWidth() - get_width;
+        float y_opengl = -2*get_heigth*y/getHeight() + get_heigth;
 
         Log.d("message","x_opengl="+Float.toString(x_opengl));
         Log.d("message","y_opengl="+Float.toString(y_opengl));
@@ -110,7 +113,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     condition=true;
                     break;
                 case MotionEvent.ACTION_UP:
-                   mRenderer.setPosition(0.0f,-9.0f);
+                   mRenderer.setPosition(9.0f,9.0f);
                     requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
                     condition=false;
 

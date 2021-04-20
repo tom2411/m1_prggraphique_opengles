@@ -96,8 +96,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         /* ici on aurait pu se passer de cette méthode et déclarer
         la projection qu'à la création de la surface !!
          */
+        int width_proj = width/100;
+        int heigth_proj = height/100;
         GLES30.glViewport(0, 0, width, height);
-        Matrix.orthoM(mProjectionMatrix, 0, -10.0f, 10.0f, -10.0f, 10.0f, -1.0f, 1.0f);
+        Matrix.orthoM(mProjectionMatrix, 0, -width_proj, width_proj, -heigth_proj, heigth_proj, -1.0f, 1.0f);
 
     }
 
