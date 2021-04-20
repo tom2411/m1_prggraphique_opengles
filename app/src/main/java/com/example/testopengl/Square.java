@@ -51,14 +51,15 @@ public class Square {
             "in vec4 Couleur;\n"+
             "in vec3 Position;\n"+
             "out vec4 fragColor;\n"+
-            "void main() {\n" +
-            "float x = Position.x;\n"+
+            "void main() {\n" +// transformation du carré en rond
+            /*"float x = Position.x;\n"+
             "float y = Position.y;\n"+
             "float test = x*x+y*y;\n"+
             "if (test>1.0) \n"+
-                "discard;\n"+
+                "discard;\n"+*/
             "fragColor = Couleur;\n" +
-            "}\n";
+            "}\n"
+            ;
 
     /* les déclarations pour l'équivalent des VBO */
 
