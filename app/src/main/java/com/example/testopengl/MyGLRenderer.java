@@ -28,10 +28,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "MyGLRenderer";
-    private Square   mSquare;
+    private Square mSquare;
     private Plateau mPlateau;
-
     private Triangle mTriangle;
+    private Rond mRond;
+
 
     // Les matrices habituelles Model/View/Projection
 
@@ -42,7 +43,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private float[] mSquarePosition = {0.0f, 0.0f};
     private float[] mPlateauPosition = {0.0f, 0.0f};
-    private float[] mTrianglePosition = {2.0f, 2.0f};
+    private float[] mTrianglePosition = {0.0f, 0.0f};
+    private float[] mRondPosition = {10.0f, 0.0f};
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override
@@ -53,8 +55,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on va définir une classe Square pour dessiner des carrés */
         mPlateau = new Plateau(mPlateauPosition);
-        mSquare   = new Square(mSquarePosition);
-        mTriangle   = new Triangle(mTrianglePosition);
+//        mSquare   = new Square(mSquarePosition);
+//        mTriangle   = new Triangle(mTrianglePosition);
+        mRond   = new Rond(mRondPosition);
 
     }
 
@@ -97,8 +100,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on appelle la méthode dessin du carré élémentaire */
         mPlateau.draw(scratch);
-        mSquare.draw(scratch);
-        mTriangle.draw(scratch);
+//        mSquare.draw(scratch);
+//        mTriangle.draw(scratch);
+        mRond.draw(scratch);
 
     }
 
