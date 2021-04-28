@@ -66,8 +66,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         float screen_x = getWidth();
         float screen_y = getHeight();
 
-
-
         // Des messages si nécessaires */
         Log.d("message", "x"+Float.toString(x));
         Log.d("message", "y"+Float.toString(y));
@@ -99,12 +97,12 @@ public class MyGLSurfaceView extends GLSurfaceView {
         */
 
        boolean test_square = ((x_opengl < pos[0]+1.0) && (x_opengl > pos[0]-1.0) && (y_opengl < pos[1]+1.0) && (y_opengl > pos[1]-1.0));
+       boolean test_plateau = ((x_opengl < pos[0]+10.0) && (x_opengl > pos[0]-10.0) && (y_opengl < pos[1]+10.0) && (y_opengl > pos[1]-10.0));
 
         Log.d("message","test_square="+Boolean.toString(test_square));
         Log.d("message","condition="+Boolean.toString(condition));
 
-        if (condition || test_square) {
-
+        if (condition || test_square || !test_plateau) {
             switch (e.getAction()) {
                 /* Lorsqu'on touche l'écran on mémorise juste le point */
                 case MotionEvent.ACTION_DOWN:
@@ -113,10 +111,9 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     condition=true;
                     break;
                 case MotionEvent.ACTION_UP:
-                   mRenderer.setPosition(9.0f,9.0f);
-                    requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
-                    condition=false;
-
+                   mRenderer.setPosition(8.0f,-8.0f);
+                   requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
+                   condition=false;
             }
         }
 
