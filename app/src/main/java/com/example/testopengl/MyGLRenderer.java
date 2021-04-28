@@ -29,7 +29,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "MyGLRenderer";
     private Square   mSquare;
-    private Plateau plateau;
+    private Plateau mPlateau;
+
+    private Triangle mTriangle;
 
     // Les matrices habituelles Model/View/Projection
 
@@ -40,6 +42,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private float[] mSquarePosition = {0.0f, 0.0f};
     private float[] mPlateauPosition = {0.0f, 0.0f};
+    private float[] mTrianglePosition = {2.0f, 2.0f};
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override
@@ -49,8 +52,10 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
         /* on va définir une classe Square pour dessiner des carrés */
-        plateau   = new Plateau(mPlateauPosition);
+        mPlateau = new Plateau(mPlateauPosition);
         mSquare   = new Square(mSquarePosition);
+        mTriangle   = new Triangle(mTrianglePosition);
+
     }
 
     /* Deuxième méthode équivalente à la fonction Display */
@@ -80,8 +85,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         /* Pour définir une translation on donne les paramètres de la translation
         et la matrice (ici mModelMatrix) est multipliée par la translation correspondante
          */
-        Matrix.translateM(mModelMatrix, 0, mSquarePosition[0], mSquarePosition[1], 0);
         Matrix.translateM(mModelMatrix, 0, mPlateauPosition[0], mPlateauPosition[1], 0);
+//        Matrix.translateM(mModelMatrix, 0, mSquarePosition[0], mSquarePosition[1], 0);
+//        Matrix.translateM(mModelMatrix, 0, mTrianglePosition[0], mTrianglePosition[1], 0);
 
         Log.d("Renderer", "mSquarex"+Float.toString(mSquarePosition[0]));
         Log.d("Renderer", "mSquarey"+Float.toString(mSquarePosition[1]));
@@ -90,8 +96,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mModelMatrix, 0);
 
         /* on appelle la méthode dessin du carré élémentaire */
-        plateau.draw(scratch);
+        mPlateau.draw(scratch);
         mSquare.draw(scratch);
+        mTriangle.draw(scratch);
 
     }
 
