@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.testopengl;
+package com.example.testopengl.formes;
 
 import android.opengl.GLES30;
+
+import com.example.testopengl.MyGLRenderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

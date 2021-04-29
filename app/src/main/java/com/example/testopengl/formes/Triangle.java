@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.testopengl;
+package com.example.testopengl.formes;
+
+import android.opengl.GLES30;
+
+import com.example.testopengl.MyGLRenderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
-import android.util.Log;
-
 //import android.opengl.GLES20;
-import android.opengl.GLES30;
 
 
 //Dessiner un carré
 
-public class Square {
+public class Triangle {
 /* Le vertex shader avec la définition de gl_Position et les variables utiles au fragment shader
  */
     private final String vertexShaderCode =
@@ -85,20 +85,20 @@ public class Square {
      Oui ce n'est pas joli avec 1.0 en dur ....
      */
 
-    static float squareCoords[] = {
-            -1.0f,   1.0f, 0.0f,
-            -1.0f,  -1.0f, 0.0f,
-            1.0f,  -1.0f, 0.0f,
-            1.f,  1.f, 0.0f };
+    static float triangleCoords[] = {
+            -5.0f,   2.0f, 0.0f,
+            -7.0f,  -2.0f, 0.0f,
+            -3.0f,  -2.0f, 0.0f
+            };
     // Le tableau des couleurs
-    static float squareColors[] = {
+    static float triangleColors[] = {
              1.0f,  0.0f, 0.0f, 1.0f,
-             1.0f,  1.0f, 1.0f, 1.0f,
-             0.0f,  1.0f, 0.0f, 1.0f,
-             0.0f,  0.0f, 1.0f, 1.0f };
+             1.0f,  0.0f, 0.0f, 1.0f,
+             1.0f,  0.0f, 0.0f, 1.0f,
+             };
 
     // Le carré est dessiné avec 2 triangles
-    private final short Indices[] = { 0, 1, 2, 0, 2, 3 };
+    private final short Indices[] = {0, 1, 2};
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // le pas entre 2 sommets : 4 bytes per vertex
 
@@ -106,23 +106,23 @@ public class Square {
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Square(float[] Pos) {
+    public Triangle(float[] Pos) {
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
         // initialisation du buffer pour les vertex (4 bytes par float)
-        ByteBuffer bb = ByteBuffer.allocateDirect(squareCoords.length * 4);
+        ByteBuffer bb = ByteBuffer.allocateDirect(triangleCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
         vertexBuffer = bb.asFloatBuffer();
-        vertexBuffer.put(squareCoords);
+        vertexBuffer.put(triangleCoords);
         vertexBuffer.position(0);
 
 
         // initialisation du buffer pour les couleurs (4 bytes par float)
-        ByteBuffer bc = ByteBuffer.allocateDirect(squareColors.length * 4);
+        ByteBuffer bc = ByteBuffer.allocateDirect(triangleColors.length * 4);
         bc.order(ByteOrder.nativeOrder());
         colorBuffer = bc.asFloatBuffer();
-        colorBuffer.put(squareColors);
+        colorBuffer.put(triangleColors);
         colorBuffer.position(0);
 
         // initialisation du buffer des indices

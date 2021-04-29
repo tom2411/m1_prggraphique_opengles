@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.testopengl;
+package com.example.testopengl.formes;
 
 import android.opengl.GLES30;
+
+import com.example.testopengl.MyGLRenderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -27,36 +29,36 @@ import java.nio.ShortBuffer;
 
 //Dessiner un carré
 
-public class Plateau {
-    /* Le vertex shader avec la définition de gl_Position et les variables utiles au fragment shader
-     */
+public class Square {
+/* Le vertex shader avec la définition de gl_Position et les variables utiles au fragment shader
+ */
     private final String vertexShaderCode =
-            "#version 300 es\n"+
-                    "uniform mat4 uMVPMatrix;\n"+
-                    "in vec3 vPosition;\n" +
-                    "in vec4 vCouleur;\n"+
-                    "out vec4 Couleur;\n"+
-                    "out vec3 Position;\n"+
-                    "void main() {\n" +
-                    "Position = vPosition;\n"+
-                    "gl_Position = uMVPMatrix * vec4(vPosition,1.0);\n" +
-                    "Couleur = vCouleur;\n"+
-                    "}\n";
+        "#version 300 es\n"+
+                "uniform mat4 uMVPMatrix;\n"+
+            "in vec3 vPosition;\n" +
+                "in vec4 vCouleur;\n"+
+                "out vec4 Couleur;\n"+
+                "out vec3 Position;\n"+
+            "void main() {\n" +
+                "Position = vPosition;\n"+
+            "gl_Position = uMVPMatrix * vec4(vPosition,1.0);\n" +
+                "Couleur = vCouleur;\n"+
+            "}\n";
 
     private final String fragmentShaderCode =
             "#version 300 es\n"+
-                    "precision mediump float;\n" + // pour définir la taille d'un float
-                    "in vec4 Couleur;\n"+
-                    "in vec3 Position;\n"+
-                    "out vec4 fragColor;\n"+
-                    "void main() {\n" +// transformation du carré en rond
+            "precision mediump float;\n" + // pour définir la taille d'un float
+            "in vec4 Couleur;\n"+
+            "in vec3 Position;\n"+
+            "out vec4 fragColor;\n"+
+            "void main() {\n" +// transformation du carré en rond
             /*"float x = Position.x;\n"+
             "float y = Position.y;\n"+
             "float test = x*x+y*y;\n"+
             "if (test>1.0) \n"+
                 "discard;\n"+*/
-                    "fragColor = Couleur;\n" +
-                    "}\n"
+            "fragColor = Couleur;\n" +
+            "}\n"
             ;
 
     /* les déclarations pour l'équivalent des VBO */
@@ -84,16 +86,16 @@ public class Plateau {
      */
 
     static float squareCoords[] = {
-            -10.0f,   10.0f, 0.0f,
-            -10.0f,  -10.0f, 0.0f,
-            10.0f,  -10.0f, 0.0f,
-            10.f,  10.f, 0.0f };
+            -1.0f,   1.0f, 0.0f,
+            -1.0f,  -1.0f, 0.0f,
+            1.0f,  -1.0f, 0.0f,
+            1.f,  1.f, 0.0f };
     // Le tableau des couleurs
     static float squareColors[] = {
-            1.0f,  0.0f, 0.0f, 1.0f,
-            1.0f,  1.0f, 1.0f, 1.0f,
-            0.0f,  1.0f, 0.0f, 1.0f,
-            0.0f,  0.0f, 1.0f, 1.0f };
+             1.0f,  0.0f, 0.0f, 1.0f,
+             1.0f,  1.0f, 1.0f, 1.0f,
+             0.0f,  1.0f, 0.0f, 1.0f,
+             0.0f,  0.0f, 1.0f, 1.0f };
 
     // Le carré est dessiné avec 2 triangles
     private final short Indices[] = { 0, 1, 2, 0, 2, 3 };
@@ -104,7 +106,7 @@ public class Plateau {
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Plateau(float[] Pos) {
+    public Square(float[] Pos) {
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
@@ -157,7 +159,7 @@ public class Plateau {
         // Add program to OpenGL environment
         GLES30.glUseProgram(IdProgram);
 
-        // get handle to shape's transformation matrix
+           // get handle to shape's transformation matrix
         IdMVPMatrix = GLES30.glGetUniformLocation(IdProgram, "uMVPMatrix");
 
         // Apply the projection and view transformation

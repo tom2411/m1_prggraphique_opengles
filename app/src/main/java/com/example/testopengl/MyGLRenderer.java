@@ -20,6 +20,12 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
+import com.example.testopengl.formes.Losange;
+import com.example.testopengl.formes.Plateau;
+import com.example.testopengl.formes.Rond;
+import com.example.testopengl.formes.Square;
+import com.example.testopengl.formes.Triangle;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -32,6 +38,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Plateau mPlateau;
     private Triangle mTriangle;
     private Rond mRond;
+    private Losange mLosange;
+
 
 
     // Les matrices habituelles Model/View/Projection
@@ -45,6 +53,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private float[] mPlateauPosition = {0.0f, 0.0f};
     private float[] mTrianglePosition = {0.0f, 0.0f};
     private float[] mRondPosition = {10.0f, 0.0f};
+    private float[] mLosangePosition = {10.0f, 0.0f};
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override
@@ -57,7 +66,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mPlateau = new Plateau(mPlateauPosition);
 //        mSquare   = new Square(mSquarePosition);
 //        mTriangle   = new Triangle(mTrianglePosition);
-        mRond   = new Rond(mRondPosition);
+        //mRond   = new Rond(mRondPosition);
+        mLosange   = new Losange(mLosangePosition);
 
     }
 
@@ -102,7 +112,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mPlateau.draw(scratch);
 //        mSquare.draw(scratch);
 //        mTriangle.draw(scratch);
-        mRond.draw(scratch);
+        //mRond.draw(scratch);
+        mLosange.draw(scratch);
 
     }
 
