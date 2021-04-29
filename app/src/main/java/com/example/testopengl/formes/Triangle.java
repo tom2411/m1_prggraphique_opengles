@@ -29,7 +29,7 @@ import java.nio.ShortBuffer;
 
 //Dessiner un carré
 
-public class Triangle {
+public class Triangle implements Forme{
 /* Le vertex shader avec la définition de gl_Position et les variables utiles au fragment shader
  */
     private final String vertexShaderCode =

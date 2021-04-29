@@ -29,7 +29,7 @@ import java.nio.ShortBuffer;
 
 //Dessiner un carré
 
-public class Plateau {
+public class Plateau implements Forme {
     /* Le vertex shader avec la définition de gl_Position et les variables utiles au fragment shader
      */
     private final String vertexShaderCode =
