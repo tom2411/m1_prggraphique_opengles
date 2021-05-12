@@ -19,10 +19,14 @@ import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
+import com.example.testopengl.formes.Forme;
 import com.example.testopengl.formes.Losange;
 import com.example.testopengl.formes.Plateau;
 import com.example.testopengl.formes.Square;
 import com.example.testopengl.formes.Triangle;
+import com.example.testopengl.jeu.Grille;
+
+import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -35,10 +39,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Square mSquare;
     private Plateau mPlateau;
     private Triangle mTriangle;
-    //private Rond mRond;
     private Losange mLosange;
-
-
+    private Grille mGrille;
 
     // Les matrices habituelles Model/View/Projection
 
@@ -49,9 +51,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private float[] mSquarePosition = {-5.0f, 2.0f};
     private float[] mPlateauPosition = {0.0f, 0.0f};
-    private float[] mTrianglePosition = {5.0f, -5.0f};
-    //private float[] mRondPosition = {0.0f, 0.0f};
-    private float[] mLosangePosition = {7.0f, 7.0f};
+    private float[] mTrianglePosition = {0.0f, 0.0f};
+    private float[] mLosangePosition = {0.0f, 7.0f};
+
+    private float[] case1 = {-7.0f,0.0f};
+    private float[] case2 = {7.0f, 0.0f};
+    private float[] case3 = {7.5f, 0.0f};
+    private float[] case4 = {-2.0f, -2.0f};
+    private float[] case5 = {6.7f, 0.0f};
+    private float[] case6 = {7.5f, 0.0f};
+    private float[] case7 = {-7f, -6.0f};
+    private float[] case8 = {6.5f, 0.0f};
+
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override
@@ -64,8 +75,17 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         mPlateau = new Plateau(mPlateauPosition);
         mSquare   = new Square(mSquarePosition);
         mTriangle   = new Triangle(mTrianglePosition);
-        //mRond   = new Rond(mRondPosition);
         mLosange   = new Losange(mLosangePosition);
+        ArrayList<Forme> liste_forme = new ArrayList<>();
+        liste_forme.add(new Losange(case1));
+        liste_forme.add(new Losange(case2));
+        liste_forme.add(new Losange(case3));
+        liste_forme.add(new Square(case4));
+        liste_forme.add(new Square(case5));
+        liste_forme.add(new Square(case6));
+        liste_forme.add(new Triangle(case7));
+        liste_forme.add(new Triangle(case8));
+        mGrille = new Grille(3,3, liste_forme);
 
     }
 
@@ -97,22 +117,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         et la matrice (ici mModelMatrix) est multipliée par la translation correspondante
          */
         Matrix.translateM(mModelMatrix, 0, mPlateauPosition[0], mPlateauPosition[1], 0);
-//        Matrix.translateM(mModelMatrix, 0, mSquarePosition[0], mSquarePosition[1], 0);
-//        Matrix.translateM(mModelMatrix, 0, mTrianglePosition[0], mTrianglePosition[1], 0);
-
-        /*Log.d("Renderer", "mSquarex"+Float.toString(mSquarePosition[0]));
-        Log.d("Renderer", "mSquarey"+Float.toString(mSquarePosition[1]));*/
 
         /* scratch est la matrice PxVxM finale */
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mModelMatrix, 0);
 
         /* on appelle la méthode dessin du carré élémentaire */
         mPlateau.draw(scratch);
-        mSquare.draw(scratch);
+        /*mSquare.draw(scratch);
         mTriangle.draw(scratch);
-        //mRond.draw(scratch);
-        mLosange.draw(scratch);
-
+        mLosange.draw(scratch);*/
+        mGrille.dessinerFormes(scratch);
     }
 
     /* équivalent au Reshape en OpenGLSL */

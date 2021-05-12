@@ -130,4 +130,12 @@ public class Grille {
             }
         }
     }
+
+    public void dessinerFormes(float[] scratch){
+        for (Forme forme: this.grille ) {
+            if (forme != null) {
+                forme.draw(scratch);
+            }
+        }
+    }
 }
