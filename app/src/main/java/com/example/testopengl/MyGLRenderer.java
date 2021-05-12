@@ -52,12 +52,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private float[] case1 = {-7.0f,6.5f};
     private float[] case2 = {7.0f, 0.0f};
-    private float[] case3 = {7.5f, 0.0f};
+    private float[] case3 = {7.0f, 0.0f};
     private float[] case4 = {-7.0f, 0.0f};
-    private float[] case5 = {6.7f, 0.0f};
-    private float[] case6 = {7.5f, 0.0f};
-    private float[] case7 = {-7f, -6.0f};
-    private float[] case8 = {6.5f, 0.0f};
+    private float[] case5 = {7.0f, 0.0f};
+    private float[] case6 = {7.0f, 0.0f};
+    private float[] case7 = {-7.0f, -6.5f};
+    private float[] case8 = {7.0f, 0.0f};
 
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
