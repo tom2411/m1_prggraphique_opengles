@@ -36,10 +36,8 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "MyGLRenderer";
-    private Square mSquare;
+
     private Plateau mPlateau;
-    private Triangle mTriangle;
-    private Losange mLosange;
     private Grille mGrille;
 
     // Les matrices habituelles Model/View/Projection
@@ -49,15 +47,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mModelMatrix = new float[16];
 
-    private float[] mSquarePosition = {-5.0f, 2.0f};
-    private float[] mPlateauPosition = {0.0f, 0.0f};
-    private float[] mTrianglePosition = {0.0f, 0.0f};
-    private float[] mLosangePosition = {0.0f, 7.0f};
 
-    private float[] case1 = {-7.0f,0.0f};
+    private float[] mPlateauPosition = {0.0f, 0.0f};
+
+    private float[] case1 = {-7.0f,6.5f};
     private float[] case2 = {7.0f, 0.0f};
     private float[] case3 = {7.5f, 0.0f};
-    private float[] case4 = {-2.0f, -2.0f};
+    private float[] case4 = {-7.0f, 0.0f};
     private float[] case5 = {6.7f, 0.0f};
     private float[] case6 = {7.5f, 0.0f};
     private float[] case7 = {-7f, -6.0f};
@@ -73,9 +69,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on va définir une classe Square pour dessiner des carrés */
         mPlateau = new Plateau(mPlateauPosition);
-        mSquare   = new Square(mSquarePosition);
-        mTriangle   = new Triangle(mTrianglePosition);
-        mLosange   = new Losange(mLosangePosition);
+
         ArrayList<Forme> liste_forme = new ArrayList<>();
         liste_forme.add(new Losange(case1));
         liste_forme.add(new Losange(case2));
@@ -123,9 +117,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on appelle la méthode dessin du carré élémentaire */
         mPlateau.draw(scratch);
-        /*mSquare.draw(scratch);
-        mTriangle.draw(scratch);
-        mLosange.draw(scratch);*/
         mGrille.dessinerFormes(scratch);
     }
 
@@ -161,13 +152,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     public void setPosition(float x, float y) {
         /*mSquarePosition[0] += x;
         mSquarePosition[1] += y;*/
-        mSquarePosition[0] = x;
-        mSquarePosition[1] = y;
 
     }
 
     public float[] getPosition() {
-        return mSquarePosition;
+        return mPlateauPosition;
     }
 
 }
