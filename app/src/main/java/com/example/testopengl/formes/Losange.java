@@ -85,6 +85,14 @@ public class Losange implements Forme {
      Oui ce n'est pas joli avec 1.0 en dur ....
      */
 
+    // tableau qui sert de mémoire à la forme pour quelle utilise toujours le repère
+    // qui part de 0/ milieu de l'ecran
+    static float initLosangeCoords[] = {
+            0.0f,   1.0f, 0.0f,
+            -1.0f,  0.0f, 0.0f,
+            0.0f,  -1.0f, 0.0f,
+            1.f,  0.f, 0.0f };
+
     static float losangeCoords[] = {
             0.0f,   1.0f, 0.0f,
             -1.0f,  0.0f, 0.0f,
@@ -108,12 +116,15 @@ public class Losange implements Forme {
 
     public Losange(float[] Pos) {
 
+        // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
+        // avec le repère du milieu l'écran
         Position[0] = Pos[0];
         Position[1] = Pos[1];
         for (int i = 0; i < losangeCoords.length-1; i+=3) {
-            losangeCoords[i] += Position[0];
-            losangeCoords[i+1] += Position[1];
+            losangeCoords[i] = initLosangeCoords[i] + Position[0];
+            losangeCoords[i+1] = initLosangeCoords[i+1] + Position[1];
         }
+
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(losangeCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());

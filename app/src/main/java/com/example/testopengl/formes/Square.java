@@ -85,6 +85,13 @@ public class Square implements Forme {
      Oui ce n'est pas joli avec 1.0 en dur ....
      */
 
+    // tableau qui sert de mémoire à la forme pour quelle utilise toujours le repère
+    // qui part de 0/ milieu de l'ecran
+    static float initSquareCoords[] = {
+            -1.0f,   1.0f, 0.0f,
+            -1.0f,  -1.0f, 0.0f,
+            1.0f,  -1.0f, 0.0f,
+            1.0f,  1.0f, 0.0f };
     static float squareCoords[] = {
             -1.0f,   1.0f, 0.0f,
             -1.0f,  -1.0f, 0.0f,
@@ -108,12 +115,15 @@ public class Square implements Forme {
 
     public Square(float[] Pos) {
 
-        Position[0] = Pos[0];
-        Position[1] = Pos[1];
+        // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
+        // avec le repère du milieu l'écran
+        this.Position[0] = Pos[0];
+        this.Position[1] = Pos[1];
         for (int i = 0; i < squareCoords.length-1; i+=3) {
-            squareCoords[i] += Position[0];
-            squareCoords[i+1] += Position[1];
+            squareCoords[i] = initSquareCoords[i] + this.Position[0];
+            squareCoords[i+1] = initSquareCoords[i+1] + this.Position[1];
         }
+
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(squareCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());

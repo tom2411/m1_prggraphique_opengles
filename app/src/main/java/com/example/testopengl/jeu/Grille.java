@@ -43,8 +43,14 @@ public class Grille {
         this.grille.set(lig * nbLignes + col, forme);
     }
 
-    // retourne false si c'est impossible de déplacer cette case,
-    // true sinon (et déplace la case dans ce cas là)
+    /**
+     * Permet de savoir si une forme est deplaçable vers une autre.
+     * @param ligne, un int qui représente la ligne de destination de la forme
+     * @param colonne, un int qui représente la colonne de destination de la forme
+     * @return un boolean.
+     * Retourne false si c'est impossible de déplacer cette case,
+     * * true sinon (et déplace la case dans ce cas là)
+     */
     public boolean deplacement(int ligne, int colonne) {
         // pour pouvoir déplacer une forme vers le haut,
         // il faut qu'on ne soit pas dans la ligne la plus haute
@@ -131,6 +137,10 @@ public class Grille {
         }
     }
 
+    /**
+     * Permet de dessiner toutes formes qui sont dans la liste que contient la grille
+     * @param scratch
+     */
     public void dessinerFormes(float[] scratch){
         for (Forme forme: this.grille ) {
             if (forme != null) {

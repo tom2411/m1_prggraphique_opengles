@@ -47,17 +47,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mModelMatrix = new float[16];
 
-
     private float[] mPlateauPosition = {0.0f, 0.0f};
 
+    // Coordonnées des cases de la matrice pour le placement des formes
+    // à la création de la grille
     private float[] case1 = {-7.0f,6.5f};
-    private float[] case2 = {7.0f, 0.0f};
-    private float[] case3 = {7.0f, 0.0f};
+    private float[] case2 = {0.0f, 6.5f};
+    private float[] case3 = {7.0f, 6.5f};
+
     private float[] case4 = {-7.0f, 0.0f};
-    private float[] case5 = {7.0f, 0.0f};
+    private float[] case5 = {0.0f, 0.0f};
     private float[] case6 = {7.0f, 0.0f};
+
     private float[] case7 = {-7.0f, -6.5f};
-    private float[] case8 = {7.0f, 0.0f};
+    private float[] case8 = {0.0f, -6.5f};
 
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
