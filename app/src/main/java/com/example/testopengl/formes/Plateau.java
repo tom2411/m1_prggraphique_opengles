@@ -85,13 +85,13 @@ public class Plateau implements Forme {
      Oui ce n'est pas joli avec 1.0 en dur ....
      */
 
-    static float squareCoords[] = {
+    static float plateauCoords[] = {
             -10.0f,   10.0f, 0.0f,
             -10.0f,  -10.0f, 0.0f,
             10.0f,  -10.0f, 0.0f,
-            10.f,  10.f, 0.0f };
+            10.f,  10.0f, 0.0f };
     // Le tableau des couleurs
-    static float squareColors[] = {
+    static float plateauColors[] = {
             1.0f,  0.0f, 0.0f, 1.0f,
             1.0f,  1.0f, 1.0f, 1.0f,
             0.0f,  1.0f, 0.0f, 1.0f,
@@ -110,19 +110,24 @@ public class Plateau implements Forme {
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
+        for (int i = 0; i < plateauCoords.length-1; i+=3) {
+            plateauCoords[i] += Position[0];
+            plateauCoords[i+1] += Position[1];
+            System.out.println(i);
+        }
         // initialisation du buffer pour les vertex (4 bytes par float)
-        ByteBuffer bb = ByteBuffer.allocateDirect(squareCoords.length * 4);
+        ByteBuffer bb = ByteBuffer.allocateDirect(plateauCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
         vertexBuffer = bb.asFloatBuffer();
-        vertexBuffer.put(squareCoords);
+        vertexBuffer.put(plateauCoords);
         vertexBuffer.position(0);
 
 
         // initialisation du buffer pour les couleurs (4 bytes par float)
-        ByteBuffer bc = ByteBuffer.allocateDirect(squareColors.length * 4);
+        ByteBuffer bc = ByteBuffer.allocateDirect(plateauColors.length * 4);
         bc.order(ByteOrder.nativeOrder());
         colorBuffer = bc.asFloatBuffer();
-        colorBuffer.put(squareColors);
+        colorBuffer.put(plateauColors);
         colorBuffer.position(0);
 
         // initialisation du buffer des indices

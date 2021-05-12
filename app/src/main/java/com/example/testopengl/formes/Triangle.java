@@ -86,9 +86,9 @@ public class Triangle implements Forme{
      */
 
     static float triangleCoords[] = {
-            -5.0f,   2.0f, 0.0f,
-            -7.0f,  -2.0f, 0.0f,
-            -3.0f,  -2.0f, 0.0f
+            0.0f,   1.0f, 0.0f,
+            -1.0f,  -1.0f, 0.0f,
+            1.0f,  -1.0f, 0.0f
             };
     // Le tableau des couleurs
     static float triangleColors[] = {
@@ -110,6 +110,10 @@ public class Triangle implements Forme{
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
+        for (int i = 0; i < triangleCoords.length-1; i+=3) {
+            triangleCoords[i] += Position[0];
+            triangleCoords[i+1] += Position[1];
+        }
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(triangleCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());

@@ -110,6 +110,10 @@ public class Losange implements Forme {
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
+        for (int i = 0; i < losangeCoords.length-1; i+=3) {
+            losangeCoords[i] += Position[0];
+            losangeCoords[i+1] += Position[1];
+        }
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(losangeCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());

@@ -89,13 +89,13 @@ public class Square implements Forme {
             -1.0f,   1.0f, 0.0f,
             -1.0f,  -1.0f, 0.0f,
             1.0f,  -1.0f, 0.0f,
-            1.f,  1.f, 0.0f };
+            1.0f,  1.0f, 0.0f };
     // Le tableau des couleurs
     static float squareColors[] = {
-             1.0f,  0.0f, 0.0f, 1.0f,
-             1.0f,  1.0f, 1.0f, 1.0f,
-             0.0f,  1.0f, 0.0f, 1.0f,
-             0.0f,  0.0f, 1.0f, 1.0f };
+            1.0f,  0.0f, 0.0f, 1.0f,
+            1.0f,  1.0f, 1.0f, 1.0f,
+            0.0f,  1.0f, 0.0f, 1.0f,
+            0.0f,  0.0f, 1.0f, 1.0f };
 
     // Le carré est dessiné avec 2 triangles
     private final short Indices[] = { 0, 1, 2, 0, 2, 3 };
@@ -110,6 +110,10 @@ public class Square implements Forme {
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
+        for (int i = 0; i < squareCoords.length-1; i+=3) {
+            squareCoords[i] += Position[0];
+            squareCoords[i+1] += Position[1];
+        }
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(squareCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());

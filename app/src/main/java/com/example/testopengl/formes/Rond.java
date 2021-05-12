@@ -55,7 +55,7 @@ public class Rond implements Forme {
             "float x = Position.x;\n"+
             "float y = Position.y;\n"+
             "float test = x*x+y*y;\n"+
-            "if (0.0<test && test>1.0) \n"+
+            "if (test>1.0) \n"+
                 "discard;\n"+
             "fragColor = Couleur;\n" +
             "}\n"
@@ -110,6 +110,10 @@ public class Rond implements Forme {
 
         Position[0] = Pos[0];
         Position[1] = Pos[1];
+        for (int i = 0; i < rondCoords.length-1; i+=3) {
+            rondCoords[i] += Position[0];
+            rondCoords[i+1] += Position[1];
+        }
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(rondCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());

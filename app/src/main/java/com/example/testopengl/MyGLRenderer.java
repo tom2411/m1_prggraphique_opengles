@@ -18,11 +18,9 @@ package com.example.testopengl;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.util.Log;
 
 import com.example.testopengl.formes.Losange;
 import com.example.testopengl.formes.Plateau;
-import com.example.testopengl.formes.Rond;
 import com.example.testopengl.formes.Square;
 import com.example.testopengl.formes.Triangle;
 
@@ -37,7 +35,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private Square mSquare;
     private Plateau mPlateau;
     private Triangle mTriangle;
-    private Rond mRond;
+    //private Rond mRond;
     private Losange mLosange;
 
 
@@ -49,11 +47,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mViewMatrix = new float[16];
     private final float[] mModelMatrix = new float[16];
 
-    private float[] mSquarePosition = {0.0f, 0.0f};
+    private float[] mSquarePosition = {-5.0f, 2.0f};
     private float[] mPlateauPosition = {0.0f, 0.0f};
-    private float[] mTrianglePosition = {0.0f, 0.0f};
-    private float[] mRondPosition = {10.0f, 0.0f};
-    private float[] mLosangePosition = {10.0f, 0.0f};
+    private float[] mTrianglePosition = {5.0f, -5.0f};
+    //private float[] mRondPosition = {0.0f, 0.0f};
+    private float[] mLosangePosition = {7.0f, 7.0f};
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override
@@ -64,8 +62,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on va définir une classe Square pour dessiner des carrés */
         mPlateau = new Plateau(mPlateauPosition);
-//        mSquare   = new Square(mSquarePosition);
-//        mTriangle   = new Triangle(mTrianglePosition);
+        mSquare   = new Square(mSquarePosition);
+        mTriangle   = new Triangle(mTrianglePosition);
         //mRond   = new Rond(mRondPosition);
         mLosange   = new Losange(mLosangePosition);
 
@@ -102,16 +100,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 //        Matrix.translateM(mModelMatrix, 0, mSquarePosition[0], mSquarePosition[1], 0);
 //        Matrix.translateM(mModelMatrix, 0, mTrianglePosition[0], mTrianglePosition[1], 0);
 
-        Log.d("Renderer", "mSquarex"+Float.toString(mSquarePosition[0]));
-        Log.d("Renderer", "mSquarey"+Float.toString(mSquarePosition[1]));
+        /*Log.d("Renderer", "mSquarex"+Float.toString(mSquarePosition[0]));
+        Log.d("Renderer", "mSquarey"+Float.toString(mSquarePosition[1]));*/
 
         /* scratch est la matrice PxVxM finale */
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mModelMatrix, 0);
 
         /* on appelle la méthode dessin du carré élémentaire */
         mPlateau.draw(scratch);
-//        mSquare.draw(scratch);
-//        mTriangle.draw(scratch);
+        mSquare.draw(scratch);
+        mTriangle.draw(scratch);
         //mRond.draw(scratch);
         mLosange.draw(scratch);
 
