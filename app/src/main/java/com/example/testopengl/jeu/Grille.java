@@ -10,7 +10,12 @@ public class Grille {
     private final int nbLignes;
     private final int nbColonnes;
 
-    // la grille est initialisée dans son état final
+    /**
+     * La grille est initialisée dans son état final
+     * @param largeurGrille, un int qui représente le nombre de colonne
+     * @param hauteurGrille, un int qui représente le nombre de ligne
+     * @param liste_formes, une liste de forme
+     */
     public Grille(int largeurGrille, int hauteurGrille, ArrayList<Forme> liste_formes) {
         this.nbLignes = hauteurGrille;
         this.nbColonnes = largeurGrille; // si on a toujours des grilles carrées, on pourrait retirer le paramètre hauteurGrille
@@ -18,12 +23,22 @@ public class Grille {
         this.grille.add(null); // la dernière case (en bas à droite) est vide
     }
 
-    // récupérer la forme présente aux coordonnées lig et col
+    /**
+     * Récupérer la forme présente aux coordonnées lig et col
+     * @param lig, un int qui représente la ligne
+     * @param col, un int qui représente la colonne
+     * @return la forme à la position lig, col
+     */
     private Forme getFormeParLigneColonne(int lig, int col) {
         return this.grille.get(lig * nbColonnes + col);
     }
 
-    // changer la forme présente aux coordonnées lig et col
+    /**
+     * Changer la forme présente aux coordonnées lig et col
+     * @param lig, un int qui représente la ligne
+     * @param col, un int qui représente la colonne
+     * @param forme, une forme à mettre dans la grille
+     */
     private void setFormeParLigneColonne(int lig, int col, Forme forme) {
         this.grille.set(lig * nbLignes + col, forme);
     }
@@ -50,6 +65,11 @@ public class Grille {
         return false;
     }
 
+    /**
+     * Permet de déplacer une forme à la position lig, col vers le haut
+     * @param lig, un int qui représente la lignes
+     * @param col, un int qui représente la colonnes
+     */
     private void deplacementHaut(int lig, int col){
         Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
         this.setFormeParLigneColonne(lig-1, col, formeADeplacer); // on met dans la forme dans la case au-dessus
@@ -57,28 +77,50 @@ public class Grille {
 
     }
 
+    /**
+     * Permet de déplacer une forme à la position lig, col vers le bas
+     * @param lig, un int qui représente la lignes
+     * @param col, un int qui représente la colonnes
+     */
     private void deplacementBas(int lig, int col){
         Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
         this.setFormeParLigneColonne(lig+1, col, formeADeplacer);
         this.setFormeParLigneColonne(lig, col, null);
     }
 
+    /**
+     * Permet de déplacer une forme à la position lig, col vers le droite
+     * @param lig, un int qui représente la lignes
+     * @param col, un int qui représente la colonnes
+     */
     private void deplacementDroite(int lig, int col){
         Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
         this.setFormeParLigneColonne(lig, col+1, formeADeplacer);
         this.setFormeParLigneColonne(lig, col, null);
     }
 
+    /**
+     * Permet de déplacer une forme à la position lig, col vers le gauche
+     * @param lig, un int qui représente la lignes
+     * @param col, un int qui représente la colonnes
+     */
     private void deplacementGauche(int lig, int col){
         Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
         this.setFormeParLigneColonne(lig, col-1, formeADeplacer);
         this.setFormeParLigneColonne(lig, col, null);
     }
 
+    /**
+     * Récupérer la grille
+     * @return la grille courante
+     */
     public List<Forme> getGrille() {
         return grille;
     }
 
+    /**
+     * Mélange la grille avec des déplacements autorisés
+     */
     public void deplacementAleatoire() {
         int i = 0;
         for (Forme forme : this.grille) {
