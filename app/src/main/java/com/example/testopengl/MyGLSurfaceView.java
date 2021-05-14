@@ -99,10 +99,23 @@ public class MyGLSurfaceView extends GLSurfaceView {
        boolean test_square = ((x_opengl < pos[0]+1.0) && (x_opengl > pos[0]-1.0) && (y_opengl < pos[1]+1.0) && (y_opengl > pos[1]-1.0));
        boolean test_plateau = ((x_opengl < pos[0]+10.0) && (x_opengl > pos[0]-10.0) && (y_opengl < pos[1]+10.0) && (y_opengl > pos[1]-10.0));
 
-        Log.d("message","test_square="+Boolean.toString(test_square));
-        Log.d("message","condition="+Boolean.toString(condition));
+       boolean test_case1 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
+       boolean test_case2 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
+       boolean test_case3 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
 
-        if (condition || test_square || !test_plateau) {
+       boolean test_case4 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
+        boolean test_case5 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
+        boolean test_case6 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
+
+        boolean test_case7 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl < pos[1]-3.25) && (y_opengl > pos[1]-9.75));
+        boolean test_case8 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl < pos[1]-3.25) && (y_opengl > pos[1]-9.75));
+        boolean test_case9 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl < pos[1]-3.25) && (y_opengl > pos[1]-9.75));
+
+       Log.d("message","pos[0]= "+pos[0]+" ,pos[1]= "+pos[1]);
+        /*Log.d("message","test_square="+Boolean.toString(test_square));
+        Log.d("message","condition="+Boolean.toString(condition));*/
+
+        if (condition || test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9) {
             switch (e.getAction()) {
                 /* Lorsqu'on touche l'écran on mémorise juste le point */
                 case MotionEvent.ACTION_DOWN:
@@ -111,10 +124,38 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     condition=true;
                     break;
                 case MotionEvent.ACTION_UP:
-                   mRenderer.setPosition(8.0f,-8.0f);
-                   requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
-                   condition=false;
+                    mRenderer.setPosition(8.0f,-8.0f);
+                    requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
+                    condition=false;
             }
+            if (test_case1){
+                System.out.println("case1");
+            }
+            if (test_case2){
+                System.out.println("case2");
+            }
+            if (test_case3){
+                System.out.println("case3");
+            }
+            if (test_case4){
+                System.out.println("case4");
+            }
+            if (test_case5){
+                System.out.println("case5");
+            }
+            if (test_case6){
+                System.out.println("case6");
+            }
+            if (test_case7){
+                System.out.println("case7");
+            }
+            if (test_case8){
+                System.out.println("case8");
+            }
+            if (test_case9){
+                System.out.println("case9");
+            }
+
         }
 
         return true;
