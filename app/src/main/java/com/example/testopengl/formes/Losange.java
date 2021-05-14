@@ -13,23 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.testopengl;
+package com.example.testopengl.formes;
+
+import android.opengl.GLES30;
+
+import com.example.testopengl.MyGLRenderer;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
-import android.util.Log;
-
 //import android.opengl.GLES20;
-import android.opengl.GLES30;
 
 
 //Dessiner un carré
 
-public class Square {
+public class Losange implements Forme {
 /* Le vertex shader avec la définition de gl_Position et les variables utiles au fragment shader
  */
     private final String vertexShaderCode =
@@ -51,14 +51,15 @@ public class Square {
             "in vec4 Couleur;\n"+
             "in vec3 Position;\n"+
             "out vec4 fragColor;\n"+
-            "void main() {\n" +
-            "float x = Position.x;\n"+
+            "void main() {\n" +// transformation du carré en rond
+            /*"float x = Position.x;\n"+
             "float y = Position.y;\n"+
             "float test = x*x+y*y;\n"+
             "if (test>1.0) \n"+
-                "discard;\n"+
+                "discard;\n"+*/
             "fragColor = Couleur;\n" +
-            "}\n";
+            "}\n"
+            ;
 
     /* les déclarations pour l'équivalent des VBO */
 
@@ -84,20 +85,28 @@ public class Square {
      Oui ce n'est pas joli avec 1.0 en dur ....
      */
 
-    static float squareCoords[] = {
-            -1.0f,   1.0f, 0.0f,
-            -1.0f,  -1.0f, 0.0f,
-            1.0f,  -1.0f, 0.0f,
-            1.f,  1.f, 0.0f };
+    // tableau qui sert de mémoire à la forme pour quelle utilise toujours le repère
+    // qui part de 0/ milieu de l'ecran
+    static float initLosangeCoords[] = {
+            0.0f,   1.0f, 0.0f,
+            -1.0f,  0.0f, 0.0f,
+            0.0f,  -1.0f, 0.0f,
+            1.f,  0.f, 0.0f };
+
+    static float losangeCoords[] = {
+            0.0f,   1.0f, 0.0f,
+            -1.0f,  0.0f, 0.0f,
+            0.0f,  -1.0f, 0.0f,
+            1.f,  0.f, 0.0f };
     // Le tableau des couleurs
-    static float squareColors[] = {
+    static float losangeColors[] = {
              1.0f,  0.0f, 0.0f, 1.0f,
              1.0f,  1.0f, 1.0f, 1.0f,
              0.0f,  1.0f, 0.0f, 1.0f,
              0.0f,  0.0f, 1.0f, 1.0f };
 
     // Le carré est dessiné avec 2 triangles
-    private final short Indices[] = { 0, 1, 2, 0, 2, 3 };
+    private final short Indices[] = { 0, 1, 2, 2, 3, 0  };
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // le pas entre 2 sommets : 4 bytes per vertex
 
@@ -105,23 +114,30 @@ public class Square {
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Square(float[] Pos) {
+    public Losange(float[] Pos) {
 
+        // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
+        // avec le repère du milieu l'écran
         Position[0] = Pos[0];
         Position[1] = Pos[1];
+        for (int i = 0; i < losangeCoords.length-1; i+=3) {
+            losangeCoords[i] = initLosangeCoords[i] + Position[0];
+            losangeCoords[i+1] = initLosangeCoords[i+1] + Position[1];
+        }
+
         // initialisation du buffer pour les vertex (4 bytes par float)
-        ByteBuffer bb = ByteBuffer.allocateDirect(squareCoords.length * 4);
+        ByteBuffer bb = ByteBuffer.allocateDirect(losangeCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
         vertexBuffer = bb.asFloatBuffer();
-        vertexBuffer.put(squareCoords);
+        vertexBuffer.put(losangeCoords);
         vertexBuffer.position(0);
 
 
         // initialisation du buffer pour les couleurs (4 bytes par float)
-        ByteBuffer bc = ByteBuffer.allocateDirect(squareColors.length * 4);
+        ByteBuffer bc = ByteBuffer.allocateDirect(losangeColors.length * 4);
         bc.order(ByteOrder.nativeOrder());
         colorBuffer = bc.asFloatBuffer();
-        colorBuffer.put(squareColors);
+        colorBuffer.put(losangeColors);
         colorBuffer.position(0);
 
         // initialisation du buffer des indices
