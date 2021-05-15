@@ -27,6 +27,7 @@ import com.example.testopengl.formes.Triangle;
 import com.example.testopengl.jeu.Grille;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -38,6 +39,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private static final String TAG = "MyGLRenderer";
 
     private Plateau mPlateau;
+
+    private Losange losange1;
+    private Losange losange2;
+    private Losange losange3;
+
+    private Square carre1;
+    private Square carre2;
+    private Square carre3;
+
+    private Triangle triangle1;
+    private Triangle triangle2;
+
     private Grille mGrille;
 
     // Les matrices habituelles Model/View/Projection
@@ -61,6 +74,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private float[] case7 = {-7.0f, -6.5f};
     private float[] case8 = {0.0f, -6.5f};
+    private float[] case9 = {7.0f, -6.5f};
 
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
@@ -73,17 +87,28 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         /* on va définir une classe Square pour dessiner des carrés */
         mPlateau = new Plateau(mPlateauPosition);
 
-        ArrayList<Forme> liste_forme = new ArrayList<>();
-        liste_forme.add(new Losange(case1));
-        liste_forme.add(new Losange(case2));
-        liste_forme.add(new Losange(case3));
-        liste_forme.add(new Square(case4));
-        liste_forme.add(new Square(case5));
-        liste_forme.add(new Square(case6));
-        liste_forme.add(new Triangle(case7));
-        liste_forme.add(new Triangle(case8));
+        this.losange1 = new Losange(case1);
+        this.losange2 = new Losange(case2);
+        this.losange3 = new Losange(case3);
+
+        this.carre1 = new Square(case4);
+        this.carre2 = new Square(case5);
+        this.carre3 = new Square(case6);
+
+        this.triangle1 = new Triangle(case7);
+        this.triangle2 = new Triangle(case8);
+
+        ArrayList<Forme> liste_forme = new ArrayList<>(Arrays.asList(losange1,losange2,losange3,carre1,carre2,carre3,triangle1,triangle2));
         mGrille = new Grille(3,3, liste_forme);
 
+    }
+
+    public Grille mGrille() {
+        return this.mGrille;
+    }
+
+    public float[] mMVPMatrix(){
+        return  this.mMVPMatrix;
     }
 
     /* Deuxième méthode équivalente à la fonction Display */
@@ -113,7 +138,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         /* Pour définir une translation on donne les paramètres de la translation
         et la matrice (ici mModelMatrix) est multipliée par la translation correspondante
          */
-        Matrix.translateM(mModelMatrix, 0, mPlateauPosition[0], mPlateauPosition[1], 0);
+        /*Matrix.translateM(mModelMatrix, 0, mPlateauPosition[0], mPlateauPosition[1], 0);
+        Matrix.translateM(mModelMatrix, 0, case1[0], case1[1], 0);
+        Matrix.translateM(mModelMatrix, 0, case2[0], case2[1], 0);
+        Matrix.translateM(mModelMatrix, 0, case3[0], case3[1], 0);
+
+        Matrix.translateM(mModelMatrix, 0, case4[0], case4[1], 0);
+        Matrix.translateM(mModelMatrix, 0, case5[0], case5[1], 0);*/
+        Matrix.translateM(mModelMatrix, 0, 0, 0, 0);
+
+        /*Matrix.translateM(mModelMatrix, 0, case7[0], case7[1], 0);
+        Matrix.translateM(mModelMatrix, 0, case8[0], case8[1], 0);*/
+
 
         /* scratch est la matrice PxVxM finale */
         Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mModelMatrix, 0);
@@ -153,9 +189,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     /* Les méthodes nécessaires à la manipulation de la position finale du carré */
     public void setPosition(float x, float y) {
-        /*mSquarePosition[0] += x;
-        mSquarePosition[1] += y;*/
-
+        this.carre3.set_position(this.case9);
     }
 
     public float[] getPosition() {

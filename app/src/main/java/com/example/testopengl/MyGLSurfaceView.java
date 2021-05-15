@@ -21,6 +21,10 @@ import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.example.testopengl.formes.Forme;
+
+import java.util.List;
+
 /* La classe MyGLSurfaceView avec en particulier la gestion des événements
   et la création de l'objet renderer
 
@@ -96,14 +100,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
         /* On teste si le point touché appartient au carré ou pas car on ne doit le déplacer que si ce point est dans le carré
         */
 
-       boolean test_square = ((x_opengl < pos[0]+1.0) && (x_opengl > pos[0]-1.0) && (y_opengl < pos[1]+1.0) && (y_opengl > pos[1]-1.0));
-       boolean test_plateau = ((x_opengl < pos[0]+10.0) && (x_opengl > pos[0]-10.0) && (y_opengl < pos[1]+10.0) && (y_opengl > pos[1]-10.0));
+        boolean test_square = ((x_opengl < pos[0]+1.0) && (x_opengl > pos[0]-1.0) && (y_opengl < pos[1]+1.0) && (y_opengl > pos[1]-1.0));
+        boolean test_plateau = ((x_opengl < pos[0]+10.0) && (x_opengl > pos[0]-10.0) && (y_opengl < pos[1]+10.0) && (y_opengl > pos[1]-10.0));
 
-       boolean test_case1 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
-       boolean test_case2 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
-       boolean test_case3 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
+        boolean test_case1 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
+        boolean test_case2 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
+        boolean test_case3 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl > pos[1]+3.25) && (y_opengl < pos[1]+9.75));
 
-       boolean test_case4 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
+        boolean test_case4 = ((x_opengl > pos[0]-11) && (x_opengl < pos[0]-3.5) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
         boolean test_case5 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
         boolean test_case6 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl > pos[1]-3.25) && (y_opengl < pos[1]+3.25));
 
@@ -111,51 +115,121 @@ public class MyGLSurfaceView extends GLSurfaceView {
         boolean test_case8 = ((x_opengl > pos[0]-3.5) && (x_opengl < pos[0]+3.5) && (y_opengl < pos[1]-3.25) && (y_opengl > pos[1]-9.75));
         boolean test_case9 = ((x_opengl > pos[0]+3.5) && (x_opengl < pos[0]+11) && (y_opengl < pos[1]-3.25) && (y_opengl > pos[1]-9.75));
 
-       Log.d("message","pos[0]= "+pos[0]+" ,pos[1]= "+pos[1]);
+        Log.d("message","pos[0]= "+pos[0]+" ,pos[1]= "+pos[1]);
         /*Log.d("message","test_square="+Boolean.toString(test_square));
         Log.d("message","condition="+Boolean.toString(condition));*/
 
         if (condition || test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9) {
-            switch (e.getAction()) {
-                /* Lorsqu'on touche l'écran on mémorise juste le point */
+           switch (e.getAction()) {
+                //Lorsqu'on touche l'écran on mémorise juste le point
                 case MotionEvent.ACTION_DOWN:
                     mPreviousX = x;
                     mPreviousY = y;
-                    condition=true;
+                    condition = true;
                     break;
                 case MotionEvent.ACTION_UP:
-                    mRenderer.setPosition(8.0f,-8.0f);
+                  /*  mRenderer.setPosition( 7.0f, -6.5f);
                     requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
-                    condition=false;
+                    condition = false;*/
+                    if (condition && test_case6 && this.mRenderer.mGrille().deplacementPossible(1,2)){
+                        List<Forme> liste_forme = this.mRenderer.mGrille().getGrille();
+                        int lig = -1;
+                        int col = -1;
+                        for (int i = 0; i < liste_forme.size(); i++) {
+                            if (liste_forme.get(i) == null){
+                                lig = i / 3;
+                                col = i % 3;
+                            }
+                        }
+                        Log.d("deplacement", "ligne : "+lig+" ,col : "+col);
+                        Log.d("deplacement", "pos[0] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[0]);
+                        Log.d("deplacement", "pos[1] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[1]);
+                        Log.d("deplacement", ""+this.mRenderer.mGrille().getGrille());
+                        mRenderer.setPosition(7.0f,-6.5f);
+                        Log.d("deplacement", "pos[0] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[0]);
+                        Log.d("deplacement", "pos[1] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[1]);
+                        mRenderer.mGrille().deplacement(1,2);
+                        requestRender();
+                        condition=false;
+                    }
             }
-            if (test_case1){
+           /* if (condition && test_case1 && this.mRenderer.mGrille().deplacementPossible(0,0)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(0,0));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case1");
+                requestRender();
+                condition=false;
             }
-            if (test_case2){
+            if (condition && test_case2 && this.mRenderer.mGrille().deplacementPossible(0,1)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(0,1));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case2");
+                requestRender();
+                condition=false;
             }
-            if (test_case3){
+            if (condition && test_case3 && this.mRenderer.mGrille().deplacementPossible(0,2)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(0,2));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case3");
+                requestRender();
+                condition=false;
             }
-            if (test_case4){
+            if (condition && test_case4 && this.mRenderer.mGrille().deplacementPossible(1,0)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(1,0));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case4");
+                requestRender();
+                condition=false;
             }
-            if (test_case5){
+            if (condition && test_case5 && this.mRenderer.mGrille().deplacementPossible(1,1)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(1,1));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case5");
+                requestRender();
+                condition=false;
             }
-            if (test_case6){
-                System.out.println("case6");
+            if (condition && test_case6 && this.mRenderer.mGrille().deplacementPossible(1,2)){
+                List<Forme> liste_forme = this.mRenderer.mGrille().getGrille();
+                int lig = -1;
+                int col = -1;
+                for (int i = 0; i < liste_forme.size(); i++) {
+                    if (liste_forme.get(i) == null){
+                        lig = i / 3;
+                        col = i % 3;
+                    }
+                }
+                Log.d("deplacement", "ligne : "+lig+" ,col : "+col);
+                Log.d("deplacement", "pos[0] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[0]);
+                Log.d("deplacement", "pos[1] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[1]);
+                Log.d("deplacement", ""+this.mRenderer.mGrille().getGrille());
+                mRenderer.setPosition(7.0f,-6.5f);
+                Log.d("deplacement", "pos[0] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[0]);
+                Log.d("deplacement", "pos[1] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[1]);
+                mRenderer.mGrille().deplacement(1,2);
+                requestRender();
+                condition=false;
             }
-            if (test_case7){
+            if (condition && test_case7 && this.mRenderer.mGrille().deplacementPossible(2,0)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(2,0));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case7");
+                requestRender();
+                condition=false;
             }
-            if (test_case8){
+            if (condition && test_case8 && this.mRenderer.mGrille().deplacementPossible(2,1)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(2,1));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case8");
+                requestRender();
+                condition=false;
             }
-            if (test_case9){
+            if (condition && test_case9 && this.mRenderer.mGrille().deplacementPossible(2,2)){
+                System.out.println(this.mRenderer.mGrille().deplacementPossible(2,2));
+                System.out.println(this.mRenderer.mGrille().getGrille());
                 System.out.println("case9");
-            }
-
+                requestRender();
+                condition=false;
+            }*/
         }
 
         return true;

@@ -159,6 +159,12 @@ public class Plateau implements Forme {
         Position[0]=pos[0];
         Position[1]=pos[1];
     }
+
+    @Override
+    public float[] get_position() {
+        return this.Position;
+    }
+
     /* La fonction Display */
     public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment

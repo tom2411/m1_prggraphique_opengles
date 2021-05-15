@@ -1,8 +1,11 @@
 package com.example.testopengl.jeu;
 
+import android.util.Log;
+
 import com.example.testopengl.formes.Forme;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Grille {
@@ -51,24 +54,47 @@ public class Grille {
      * Retourne false si c'est impossible de déplacer cette case,
      * * true sinon (et déplace la case dans ce cas là)
      */
-    public boolean deplacement(int ligne, int colonne) {
+    public boolean deplacementPossible(int ligne, int colonne) {
+        // pour pouvoir déplacer une forme vers le haut,
+        // il faut qu'on ne soit pas dans la ligne la plus haute
+        // et qu'il n'y ait rien dans la case au dessus
+        if (ligne != 0 && getFormeParLigneColonne(ligne - 1, colonne) == null) {
+            //this.deplacementHaut(ligne, colonne);
+            return true;
+        } else if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
+            //this.deplacementBas(ligne, colonne);
+            return true;
+        } else if (colonne != nbColonnes - 1 && getFormeParLigneColonne(colonne + 1, ligne) == null) {
+            //this.deplacementDroite(ligne, colonne);
+            return true;
+        } else if (colonne != 0 && getFormeParLigneColonne(colonne - 1, ligne) == null) {
+            //this.deplacementGauche(ligne, colonne);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Permet de savoir si une forme est deplaçable vers une autre.
+     * @param ligne, un int qui représente la ligne de destination de la forme
+     * @param colonne, un int qui représente la colonne de destination de la forme
+     * @return un boolean.
+     * Retourne false si c'est impossible de déplacer cette case,
+     * * true sinon (et déplace la case dans ce cas là)
+     */
+    public void deplacement(int ligne, int colonne) {
         // pour pouvoir déplacer une forme vers le haut,
         // il faut qu'on ne soit pas dans la ligne la plus haute
         // et qu'il n'y ait rien dans la case au dessus
         if (ligne != 0 && getFormeParLigneColonne(ligne - 1, colonne) == null) {
             this.deplacementHaut(ligne, colonne);
-            return true;
         } else if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
             this.deplacementBas(ligne, colonne);
-            return true;
         } else if (colonne != nbColonnes - 1 && getFormeParLigneColonne(colonne + 1, ligne) == null) {
             this.deplacementDroite(ligne, colonne);
-            return true;
         } else if (colonne != 0 && getFormeParLigneColonne(colonne - 1, ligne) == null) {
             this.deplacementGauche(ligne, colonne);
-            return true;
         }
-        return false;
     }
 
     /**
@@ -131,7 +157,7 @@ public class Grille {
         int i = 0;
         for (Forme forme : this.grille) {
             if (forme == null) {
-                deplacement(i/3, i%3);
+                deplacementPossible(i/3, i%3);
                 break;
             }
         }
@@ -147,5 +173,11 @@ public class Grille {
                 forme.draw(scratch);
             }
         }
+        for (Forme forme: this.grille ) {
+            if (forme != null) {
+                Log.d("deplacement", "dessinerFormes: " + Arrays.toString(forme.get_position()));
+            }
+        }
+        Log.d("deplacement", "dessinerFormes: "+ this.grille);
     }
 }

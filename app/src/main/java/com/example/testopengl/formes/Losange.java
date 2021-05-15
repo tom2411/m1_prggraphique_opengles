@@ -164,6 +164,9 @@ public class Losange implements Forme {
 
     }
 
+    public float[] get_position(){
+        return this.Position;
+    }
 
     public void set_position(float[] pos) {
         Position[0]=pos[0];

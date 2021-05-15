@@ -16,6 +16,7 @@
 package com.example.testopengl.formes;
 
 import android.opengl.GLES30;
+import android.util.Log;
 
 import com.example.testopengl.MyGLRenderer;
 
@@ -23,6 +24,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.util.Arrays;
 
 //import android.opengl.GLES20;
 
@@ -131,7 +133,6 @@ public class Square implements Forme {
         vertexBuffer.put(squareCoords);
         vertexBuffer.position(0);
 
-
         // initialisation du buffer pour les couleurs (4 bytes par float)
         ByteBuffer bc = ByteBuffer.allocateDirect(squareColors.length * 4);
         bc.order(ByteOrder.nativeOrder());
@@ -163,8 +164,17 @@ public class Square implements Forme {
 
     }
 
+    public float[] get_position(){
+        return this.Position;
+    }
 
     public void set_position(float[] pos) {
+        for (int i = 0; i < squareCoords.length-1; i+=3) {
+            squareCoords[i] = initSquareCoords[i] + pos[0];
+            squareCoords[i+1] = initSquareCoords[i+1] + pos[1];
+        }
+        Log.d("deplacement", "pos[0]= "+pos[0]+" ,pos[1]= "+pos[1]);
+        Log.d("deplacement", Arrays.toString(squareCoords));
         Position[0]=pos[0];
         Position[1]=pos[1];
     }
@@ -178,7 +188,6 @@ public class Square implements Forme {
 
         // Apply the projection and view transformation
         GLES30.glUniformMatrix4fv(IdMVPMatrix, 1, false, mvpMatrix, 0);
-
 
         // get handle to vertex shader's vPosition member et vCouleur member
         IdPosition = GLES30.glGetAttribLocation(IdProgram, "vPosition");
@@ -199,14 +208,10 @@ public class Square implements Forme {
                 GLES30.GL_FLOAT, false,
                 couleurStride, colorBuffer);
 
-
-
-
         // Draw the square
         GLES30.glDrawElements(
                 GLES30.GL_TRIANGLES, Indices.length,
                 GLES30.GL_UNSIGNED_SHORT, indiceBuffer);
-
 
         // Disable vertex array
         GLES30.glDisableVertexAttribArray(IdPosition);
