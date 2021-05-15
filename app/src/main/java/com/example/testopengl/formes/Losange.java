@@ -16,6 +16,7 @@
 package com.example.testopengl.formes;
 
 import android.opengl.GLES30;
+import android.util.Log;
 
 import com.example.testopengl.MyGLRenderer;
 
@@ -63,14 +64,14 @@ public class Losange implements Forme {
 
     /* les déclarations pour l'équivalent des VBO */
 
-    private final FloatBuffer vertexBuffer; // Pour le buffer des coordonnées des sommets du carré
-    private final ShortBuffer indiceBuffer; // Pour le buffer des indices
-    private final FloatBuffer colorBuffer; // Pour le buffer des couleurs des sommets
+    private FloatBuffer vertexBuffer; // Pour le buffer des coordonnées des sommets du carré
+    private ShortBuffer indiceBuffer; // Pour le buffer des indices
+    private FloatBuffer colorBuffer; // Pour le buffer des couleurs des sommets
 
     /* les déclarations pour les shaders
     Identifiant du programme et pour les variables attribute ou uniform
      */
-    private final int IdProgram; // identifiant du programme pour lier les shaders
+    private int IdProgram; // identifiant du programme pour lier les shaders
     private int IdPosition; // idendifiant (location) pour transmettre les coordonnées au vertex shader
     private int IdCouleur; // identifiant (location) pour transmettre les couleurs
     private int IdMVPMatrix; // identifiant (location) pour transmettre la matrice PxVxM
@@ -87,19 +88,19 @@ public class Losange implements Forme {
 
     // tableau qui sert de mémoire à la forme pour quelle utilise toujours le repère
     // qui part de 0/ milieu de l'ecran
-    static float initLosangeCoords[] = {
+     float initLosangeCoords[] = {
             0.0f,   1.0f, 0.0f,
             -1.0f,  0.0f, 0.0f,
             0.0f,  -1.0f, 0.0f,
             1.f,  0.f, 0.0f };
 
-    static float losangeCoords[] = {
+     float losangeCoords[] = {
             0.0f,   1.0f, 0.0f,
             -1.0f,  0.0f, 0.0f,
             0.0f,  -1.0f, 0.0f,
             1.f,  0.f, 0.0f };
     // Le tableau des couleurs
-    static float losangeColors[] = {
+     float losangeColors[] = {
              1.0f,  0.0f, 0.0f, 1.0f,
              1.0f,  1.0f, 1.0f, 1.0f,
              0.0f,  1.0f, 0.0f, 1.0f,
@@ -124,6 +125,27 @@ public class Losange implements Forme {
             losangeCoords[i] = initLosangeCoords[i] + Position[0];
             losangeCoords[i+1] = initLosangeCoords[i+1] + Position[1];
         }
+
+
+
+
+    }
+
+    public float[] get_position(){
+        return this.Position;
+    }
+
+    public void set_position(float[] pos) {
+        for (int i = 0; i < losangeCoords.length-1; i+=3) {
+            losangeCoords[i] = initLosangeCoords[i] + pos[0];
+            losangeCoords[i+1] = initLosangeCoords[i+1] + pos[1];
+        }
+        Log.d("deplacement", "pos[0]= "+pos[0]+" ,pos[1]= "+pos[1]);
+        Position[0]=pos[0];
+        Position[1]=pos[1];
+    }
+    /* La fonction Display */
+    public void draw(float[] mvpMatrix) {
 
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(losangeCoords.length * 4);
@@ -161,19 +183,6 @@ public class Losange implements Forme {
         GLES30.glLinkProgram(IdProgram);                  // create OpenGL program executables
         GLES30.glGetProgramiv(IdProgram, GLES30.GL_LINK_STATUS,linkStatus,0);
 
-
-    }
-
-    public float[] get_position(){
-        return this.Position;
-    }
-
-    public void set_position(float[] pos) {
-        Position[0]=pos[0];
-        Position[1]=pos[1];
-    }
-    /* La fonction Display */
-    public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment
         GLES30.glUseProgram(IdProgram);
 

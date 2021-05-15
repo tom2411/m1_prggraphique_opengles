@@ -76,6 +76,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private float[] case8 = {0.0f, -6.5f};
     private float[] case9 = {7.0f, -6.5f};
 
+    private ArrayList<float[]> cases;
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override
@@ -86,6 +87,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on va définir une classe Square pour dessiner des carrés */
         mPlateau = new Plateau(mPlateauPosition);
+
+        this.cases = new ArrayList<>(Arrays.asList(case1, case2, case3, case4, case5, case6, case7, case8, case9));
 
         this.losange1 = new Losange(case1);
         this.losange2 = new Losange(case2);
@@ -101,6 +104,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         ArrayList<Forme> liste_forme = new ArrayList<>(Arrays.asList(losange1,losange2,losange3,carre1,carre2,carre3,triangle1,triangle2));
         mGrille = new Grille(3,3, liste_forme);
 
+        for (int i = 0; i < 9; i++) {
+            if (mGrille.getGrille().get(i) != null) {
+                mGrille.getGrille().get(i).set_position(this.cases.get(i));
+            }
+        }
+
     }
 
     public Grille mGrille() {
@@ -108,7 +117,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public float[] mMVPMatrix(){
-        return  this.mMVPMatrix;
+        return this.mMVPMatrix;
     }
 
     /* Deuxième méthode équivalente à la fonction Display */
@@ -189,7 +198,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     /* Les méthodes nécessaires à la manipulation de la position finale du carré */
     public void setPosition(float x, float y) {
-        this.carre3.set_position(this.case9);
+        this.carre3.set_position(new float[]{x, y});
     }
 
     public float[] getPosition() {

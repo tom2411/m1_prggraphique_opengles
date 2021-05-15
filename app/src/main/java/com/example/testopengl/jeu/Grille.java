@@ -7,6 +7,7 @@ import com.example.testopengl.formes.Forme;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Grille {
     private List<Forme> grille;
@@ -24,6 +25,12 @@ public class Grille {
         this.nbColonnes = largeurGrille; // si on a toujours des grilles carrées, on pourrait retirer le paramètre hauteurGrille
         this.grille = liste_formes; // la liste des formes doit être de longueur (nombre de cases - 1)
         this.grille.add(null); // la dernière case (en bas à droite) est vide
+
+        // TODO : faire en sorte que le mélange se fasse pas au début
+        for (int i = 0; i < 500; i++) {
+            this.deplacementAleatoire();
+        }
+        Log.d("grille melangee", this.grille.toString());
     }
 
     /**
@@ -74,6 +81,23 @@ public class Grille {
         return false;
     }
 
+    public ArrayList<Integer> getDeplacementsPossiblesCaseVide(int ligne, int colonne) {
+        ArrayList<Integer> deplacementsPossibles = new ArrayList<>();
+        if (ligne != 0) { // on peut déplacer le vide vers le haut
+            deplacementsPossibles.add(1);
+        }
+        if (ligne != nbLignes - 1) { // on peut déplacer le vide vers le bas
+            deplacementsPossibles.add(2);
+        }
+        if (colonne != nbColonnes - 1) { // on peut déplacer le vide vers la droite
+            deplacementsPossibles.add(3);
+        }
+        if (colonne != 0) { // on peut déplacer le vide vers la gauche
+            deplacementsPossibles.add(4);
+        }
+        return deplacementsPossibles;
+    }
+
     /**
      * Permet de savoir si une forme est deplaçable vers une autre.
      * @param ligne, un int qui représente la ligne de destination de la forme
@@ -103,9 +127,10 @@ public class Grille {
      * @param col, un int qui représente la colonnes
      */
     private void deplacementHaut(int lig, int col){
-        Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
-        this.setFormeParLigneColonne(lig-1, col, formeADeplacer); // on met dans la forme dans la case au-dessus
-        this.setFormeParLigneColonne(lig, col, null); // et on la retire de la case actuelle
+        Forme formeSource = this.getFormeParLigneColonne(lig, col);
+        Forme formeDestination = this.getFormeParLigneColonne(lig-1, col);
+        this.setFormeParLigneColonne(lig, col, formeDestination); // et on la retire de la case actuelle
+        this.setFormeParLigneColonne(lig-1, col, formeSource); // on met dans la forme dans la case au-dessus
 
     }
 
@@ -115,9 +140,10 @@ public class Grille {
      * @param col, un int qui représente la colonnes
      */
     private void deplacementBas(int lig, int col){
-        Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
-        this.setFormeParLigneColonne(lig+1, col, formeADeplacer);
-        this.setFormeParLigneColonne(lig, col, null);
+        Forme formeSource = this.getFormeParLigneColonne(lig, col);
+        Forme formeDestination = this.getFormeParLigneColonne(lig+1, col);
+        this.setFormeParLigneColonne(lig, col, formeDestination);
+        this.setFormeParLigneColonne(lig+1, col, formeSource);
     }
 
     /**
@@ -126,9 +152,10 @@ public class Grille {
      * @param col, un int qui représente la colonnes
      */
     private void deplacementDroite(int lig, int col){
-        Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
-        this.setFormeParLigneColonne(lig, col+1, formeADeplacer);
-        this.setFormeParLigneColonne(lig, col, null);
+        Forme formeSource = this.getFormeParLigneColonne(lig, col);
+        Forme formeDestination = this.getFormeParLigneColonne(lig, col+1);
+        this.setFormeParLigneColonne(lig, col, formeDestination);
+        this.setFormeParLigneColonne(lig, col+1, formeSource);
     }
 
     /**
@@ -137,9 +164,10 @@ public class Grille {
      * @param col, un int qui représente la colonnes
      */
     private void deplacementGauche(int lig, int col){
-        Forme formeADeplacer = this.getFormeParLigneColonne(lig, col);
-        this.setFormeParLigneColonne(lig, col-1, formeADeplacer);
-        this.setFormeParLigneColonne(lig, col, null);
+        Forme formeSource = this.getFormeParLigneColonne(lig, col);
+        Forme formeDestination = this.getFormeParLigneColonne(lig, col-1);
+        this.setFormeParLigneColonne(lig, col, formeDestination);
+        this.setFormeParLigneColonne(lig, col-1, formeSource);
     }
 
     /**
@@ -147,7 +175,7 @@ public class Grille {
      * @return la grille courante
      */
     public List<Forme> getGrille() {
-        return grille;
+        return this.grille;
     }
 
     /**
@@ -157,8 +185,29 @@ public class Grille {
         int i = 0;
         for (Forme forme : this.grille) {
             if (forme == null) {
-                deplacementPossible(i/3, i%3);
+                int ligne = i/3;
+                int colonne = i%3;
+                ArrayList<Integer> deplacementsPossibles = this.getDeplacementsPossiblesCaseVide(ligne, colonne);
+//                Log.d("deplacementsPossibles", deplacementsPossibles.toString());
+                Random rand = new Random();
+                int deplacementChoisi = deplacementsPossibles.get(rand.nextInt(deplacementsPossibles.size()));
+                switch (deplacementChoisi) {
+                    case 1:
+                        this.deplacementHaut(ligne, colonne);
+                        break;
+                    case 2:
+                        this.deplacementBas(ligne, colonne);
+                        break;
+                    case 3:
+                        this.deplacementDroite(ligne, colonne);
+                        break;
+                    case 4:
+                        this.deplacementGauche(ligne, colonne);
+                        break;
+                }
                 break;
+            } else {
+                i++;
             }
         }
     }
