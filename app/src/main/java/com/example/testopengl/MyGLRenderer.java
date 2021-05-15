@@ -18,6 +18,7 @@ package com.example.testopengl;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import android.util.Log;
 
 import com.example.testopengl.formes.Forme;
 import com.example.testopengl.formes.Losange;
@@ -165,6 +166,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         /* on appelle la méthode dessin du carré élémentaire */
         mPlateau.draw(scratch);
+        Log.d("deplacement", "onDrawFrame: ");
         mGrille.dessinerFormes(scratch);
     }
 

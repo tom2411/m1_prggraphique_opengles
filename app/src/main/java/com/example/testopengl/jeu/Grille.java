@@ -243,6 +243,7 @@ public class Grille {
     public void dessinerFormes(float[] scratch){
         for (Forme forme: this.grille ) {
             if (forme != null) {
+                Log.d("dessin", forme.toString());
                 forme.draw(scratch);
             }
         }
