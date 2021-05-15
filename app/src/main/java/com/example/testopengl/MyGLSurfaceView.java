@@ -119,38 +119,78 @@ public class MyGLSurfaceView extends GLSurfaceView {
         /*Log.d("message","test_square="+Boolean.toString(test_square));
         Log.d("message","condition="+Boolean.toString(condition));*/
 
-        if (condition || test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9) {
+        if (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9) {
            switch (e.getAction()) {
                 //Lorsqu'on touche l'écran on mémorise juste le point
-                case MotionEvent.ACTION_DOWN:
+                /*case MotionEvent.ACTION_DOWN:
                     mPreviousX = x;
                     mPreviousY = y;
                     condition = true;
-                    break;
+                    break;*/
                 case MotionEvent.ACTION_UP:
-                  /*  mRenderer.setPosition( 7.0f, -6.5f);
-                    requestRender(); // équivalent de glutPostRedisplay pour lancer le dessin avec les modifications.
-                    condition = false;*/
-                    if (condition && test_case6 && this.mRenderer.mGrille().deplacementPossible(1,2)){
-                        List<Forme> liste_forme = this.mRenderer.mGrille().getGrille();
-                        int lig = -1;
-                        int col = -1;
-                        for (int i = 0; i < liste_forme.size(); i++) {
-                            if (liste_forme.get(i) == null){
-                                lig = i / 3;
-                                col = i % 3;
-                            }
+                    List<Forme> liste_forme = this.mRenderer.mGrille().getGrille();
+                    int lig = -1;
+                    int col = -1;
+                    for (int i = 0; i < liste_forme.size(); i++) {
+                        if (liste_forme.get(i) == null){
+                            lig = i / 3;
+                            col = i % 3;
                         }
-                        Log.d("deplacement", "ligne : "+lig+" ,col : "+col);
-                        Log.d("deplacement", "pos[0] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[0]);
-                        Log.d("deplacement", "pos[1] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[1]);
-                        Log.d("deplacement", ""+this.mRenderer.mGrille().getGrille());
-                        mRenderer.setPosition(7.0f,-6.5f);
-                        Log.d("deplacement", "pos[0] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[0]);
-                        Log.d("deplacement", "pos[1] "+this.mRenderer.mGrille().getGrille().get( (1*3+2) ).get_position()[1]);
+                    }
+                    Log.d("deplacement","case vide : lig: "+lig+" ,col: "+col );
+                    if (test_case1 && this.mRenderer.mGrille().deplacementPossible(0,0)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(0,0));
+                        Log.d("deplacement", "case1");
+                        mRenderer.mGrille().deplacement(0,0);
+                        requestRender();
+                    }
+                    if (test_case2 && this.mRenderer.mGrille().deplacementPossible(0,1)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(0,1));
+                        Log.d("deplacement", "case2");
+                        mRenderer.mGrille().deplacement(0,1);
+                        requestRender();
+                    }
+                    if (test_case3 && this.mRenderer.mGrille().deplacementPossible(0,2)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(0,2));
+                        Log.d("deplacement", "case3");
+                        mRenderer.mGrille().deplacement(0,2);
+                        requestRender();
+                    }
+                    if (test_case4 && this.mRenderer.mGrille().deplacementPossible(1,0)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(1,0));
+                        Log.d("deplacement", "case4");
+                        mRenderer.mGrille().deplacement(1,0);
+                        requestRender();
+                    }
+                    if (test_case5 && this.mRenderer.mGrille().deplacementPossible(1,1)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(1,1));
+                        Log.d("deplacement", "case5");
+                        mRenderer.mGrille().deplacement(1,1);
+                        requestRender();
+                    }
+                    if (test_case6 && this.mRenderer.mGrille().deplacementPossible(1,2)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(1,2));
+                        Log.d("deplacement", "case6");
                         mRenderer.mGrille().deplacement(1,2);
                         requestRender();
-                        condition=false;
+                    }
+                    if (test_case7 && this.mRenderer.mGrille().deplacementPossible(2,0)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(2,0));
+                        Log.d("deplacement", "case7");
+                        mRenderer.mGrille().deplacement(2,0);
+                        requestRender();
+                    }
+                    if (test_case8 && this.mRenderer.mGrille().deplacementPossible(2,1)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(2,1));
+                        Log.d("deplacement", "case8");
+                        mRenderer.mGrille().deplacement(2,1);
+                        requestRender();
+                    }
+                    if (test_case9 && this.mRenderer.mGrille().deplacementPossible(2,2)){
+                        Log.d("deplacement", "deplacement disponible : "+this.mRenderer.mGrille().deplacementPossible(2,2));
+                        Log.d("deplacement", "case9");
+                        mRenderer.mGrille().deplacement(2,2);
+                        requestRender();
                     }
             }
            /* if (condition && test_case1 && this.mRenderer.mGrille().deplacementPossible(0,0)){

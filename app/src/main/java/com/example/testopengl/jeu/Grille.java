@@ -5,7 +5,6 @@ import android.util.Log;
 import com.example.testopengl.formes.Forme;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -68,13 +67,16 @@ public class Grille {
         if (ligne != 0 && getFormeParLigneColonne(ligne - 1, colonne) == null) {
             //this.deplacementHaut(ligne, colonne);
             return true;
-        } else if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
+        }
+        if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
             //this.deplacementBas(ligne, colonne);
             return true;
-        } else if (colonne != nbColonnes - 1 && getFormeParLigneColonne(colonne + 1, ligne) == null) {
+        }
+        if (colonne != nbColonnes - 1 && getFormeParLigneColonne(ligne, colonne + 1) == null) {
             //this.deplacementDroite(ligne, colonne);
             return true;
-        } else if (colonne != 0 && getFormeParLigneColonne(colonne - 1, ligne) == null) {
+        }
+        if (colonne != 0 && getFormeParLigneColonne(ligne, colonne - 1) == null) {
             //this.deplacementGauche(ligne, colonne);
             return true;
         }
@@ -112,11 +114,14 @@ public class Grille {
         // et qu'il n'y ait rien dans la case au dessus
         if (ligne != 0 && getFormeParLigneColonne(ligne - 1, colonne) == null) {
             this.deplacementHaut(ligne, colonne);
-        } else if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
+        }
+        if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
             this.deplacementBas(ligne, colonne);
-        } else if (colonne != nbColonnes - 1 && getFormeParLigneColonne(colonne + 1, ligne) == null) {
+        }
+        if (colonne != nbColonnes - 1 && getFormeParLigneColonne( ligne, colonne + 1) == null) {
             this.deplacementDroite(ligne, colonne);
-        } else if (colonne != 0 && getFormeParLigneColonne(colonne - 1, ligne) == null) {
+        }
+        if (colonne != 0 && getFormeParLigneColonne(ligne, colonne - 1) == null) {
             this.deplacementGauche(ligne, colonne);
         }
     }
@@ -131,6 +136,11 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig-1, col);
         this.setFormeParLigneColonne(lig, col, formeDestination); // et on la retire de la case actuelle
         this.setFormeParLigneColonne(lig-1, col, formeSource); // on met dans la forme dans la case au-dessus
+        if (lig >= 0 && formeSource != null){
+            Log.d("deplacement", formeSource.toString());
+            float[] test = {formeSource.get_position()[0],formeSource.get_position()[1]+6.5f};
+            formeSource.set_position(test);
+        }
 
     }
 
@@ -144,6 +154,11 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig+1, col);
         this.setFormeParLigneColonne(lig, col, formeDestination);
         this.setFormeParLigneColonne(lig+1, col, formeSource);
+        if (lig <= 2 && formeSource != null){
+            float[] test = {formeSource.get_position()[0],formeSource.get_position()[1]-6.5f};
+            formeSource.set_position(test);
+        }
+
     }
 
     /**
@@ -156,6 +171,10 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig, col+1);
         this.setFormeParLigneColonne(lig, col, formeDestination);
         this.setFormeParLigneColonne(lig, col+1, formeSource);
+        if (col <= 2 && formeSource != null){
+            float[] test = {formeSource.get_position()[0]+7.0f,formeSource.get_position()[1]};
+            formeSource.set_position(test);
+        }
     }
 
     /**
@@ -168,6 +187,11 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig, col-1);
         this.setFormeParLigneColonne(lig, col, formeDestination);
         this.setFormeParLigneColonne(lig, col-1, formeSource);
+        if (col >= 0 && formeSource != null){
+            Log.d("deplacement", formeSource.toString());
+            float[] test = {formeSource.get_position()[0]-7.0f,formeSource.get_position()[1]};
+            formeSource.set_position(test);
+        }
     }
 
     /**
@@ -222,11 +246,11 @@ public class Grille {
                 forme.draw(scratch);
             }
         }
-        for (Forme forme: this.grille ) {
+        /*for (Forme forme: this.grille ) {
             if (forme != null) {
                 Log.d("deplacement", "dessinerFormes: " + Arrays.toString(forme.get_position()));
             }
         }
-        Log.d("deplacement", "dessinerFormes: "+ this.grille);
+        Log.d("deplacement", "dessinerFormes: "+ this.grille);*/
     }
 }
