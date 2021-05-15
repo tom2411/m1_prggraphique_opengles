@@ -24,12 +24,6 @@ public class Grille {
         this.nbColonnes = largeurGrille; // si on a toujours des grilles carrées, on pourrait retirer le paramètre hauteurGrille
         this.grille = liste_formes; // la liste des formes doit être de longueur (nombre de cases - 1)
         this.grille.add(null); // la dernière case (en bas à droite) est vide
-
-        // TODO : faire en sorte que le mélange se fasse pas au début
-        for (int i = 0; i < 500; i++) {
-            this.deplacementAleatoire();
-        }
-        Log.d("grille melangee", this.grille.toString());
     }
 
     /**
@@ -200,6 +194,12 @@ public class Grille {
      */
     public List<Forme> getGrille() {
         return this.grille;
+    }
+
+    public void melangerGrille(int iterations) {
+        for (int i = 0; i < iterations; i++) {
+            this.deplacementAleatoire();
+        }
     }
 
     /**
