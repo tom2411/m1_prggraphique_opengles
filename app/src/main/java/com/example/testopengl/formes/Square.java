@@ -115,7 +115,7 @@ public class Square implements Forme {
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Square(float[] Pos) {
+    public Square(float[] Pos, float red, float green, float blue) {
 
         // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
         // avec le repère du milieu l'écran
@@ -126,7 +126,11 @@ public class Square implements Forme {
             squareCoords[i+1] = initSquareCoords[i+1] + this.Position[1];
         }
 
-
+        for (int i = 0; i < squareColors.length-1; i+=4) {
+            squareColors[i] = red;
+            squareColors[i+1] = green;
+            squareColors[i+2] = blue;
+        }
 
 
     }

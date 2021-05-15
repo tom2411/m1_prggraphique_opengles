@@ -115,7 +115,7 @@ public class Triangle implements Forme{
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Triangle(float[] Pos) {
+    public Triangle(float[] Pos, float red, float green, float blue) {
 
         // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
         // avec le repère du milieu l'écran
@@ -126,7 +126,11 @@ public class Triangle implements Forme{
             triangleCoords[i+1] = initTriangleCoords[i+1] + Position[1];
         }
 
-
+        for (int i = 0; i < triangleColors.length-1; i+=4) {
+            triangleColors[i] = red;
+            triangleColors[i+1] = green;
+            triangleColors[i+2] = blue;
+        }
 
     }
 

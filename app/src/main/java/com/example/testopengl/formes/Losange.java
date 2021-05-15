@@ -115,7 +115,7 @@ public class Losange implements Forme {
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Losange(float[] Pos) {
+    public Losange(float[] Pos, float red, float green, float blue) {
 
         // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
         // avec le repère du milieu l'écran
@@ -126,7 +126,11 @@ public class Losange implements Forme {
             losangeCoords[i+1] = initLosangeCoords[i+1] + Position[1];
         }
 
-
+        for (int i = 0; i < losangeColors.length-1; i+=4) {
+            losangeColors[i] = red;
+            losangeColors[i+1] = green;
+            losangeColors[i+2] = blue;
+        }
 
 
     }

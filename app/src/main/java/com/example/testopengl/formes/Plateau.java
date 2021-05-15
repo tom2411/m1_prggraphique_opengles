@@ -92,10 +92,10 @@ public class Plateau implements Forme {
             10.f,  10.0f, 0.0f };
     // Le tableau des couleurs
     static float plateauColors[] = {
-            1.0f,  0.0f, 0.0f, 1.0f,
-            1.0f,  1.0f, 1.0f, 1.0f,
-            0.0f,  1.0f, 0.0f, 1.0f,
-            0.0f,  0.0f, 1.0f, 1.0f };
+            .93f, .93f, .82f, 1.0f,
+            .93f, .93f, .82f, 1.0f,
+            .93f, .93f, .82f, 1.0f,
+            .93f, .93f, .82f, 1.0f };
 
     // Le carré est dessiné avec 2 triangles
     private final short Indices[] = { 0, 1, 2, 0, 2, 3 };

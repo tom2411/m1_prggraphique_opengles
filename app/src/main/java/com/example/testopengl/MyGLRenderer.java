@@ -90,16 +90,16 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         this.cases = new ArrayList<>(Arrays.asList(case1, case2, case3, case4, case5, case6, case7, case8, case9));
 
-        this.losange1 = new Losange(case1);
-        this.losange2 = new Losange(case2);
-        this.losange3 = new Losange(case3);
+        this.losange1 = new Losange(case1, 1f, 0f, 0f);
+        this.losange2 = new Losange(case2, 0f, 1f, 0f);
+        this.losange3 = new Losange(case3, 0f, 0f, 1f);
 
-        this.carre1 = new Square(case4);
-        this.carre2 = new Square(case5);
-        this.carre3 = new Square(case6);
+        this.carre1 = new Square(case4, 1f, 0f, 0f);
+        this.carre2 = new Square(case5, 0f, 1f, 0f);
+        this.carre3 = new Square(case6, 0f, 0f, 1f);
 
-        this.triangle1 = new Triangle(case7);
-        this.triangle2 = new Triangle(case8);
+        this.triangle1 = new Triangle(case7, 1f, 0f, 0f);
+        this.triangle2 = new Triangle(case8, 0f, 1f, 0f);
 
         ArrayList<Forme> liste_forme = new ArrayList<>(Arrays.asList(losange1,losange2,losange3,carre1,carre2,carre3,triangle1,triangle2));
         mGrille = new Grille(3,3, liste_forme);
