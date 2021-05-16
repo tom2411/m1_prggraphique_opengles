@@ -131,7 +131,6 @@ public class Triangle implements Forme{
             triangleColors[i+1] = green;
             triangleColors[i+2] = blue;
         }
-
     }
 
 
@@ -158,7 +157,6 @@ public class Triangle implements Forme{
         vertexBuffer = bb.asFloatBuffer();
         vertexBuffer.put(triangleCoords);
         vertexBuffer.position(0);
-
 
         // initialisation du buffer pour les couleurs (4 bytes par float)
         ByteBuffer bc = ByteBuffer.allocateDirect(triangleColors.length * 4);
@@ -197,7 +195,6 @@ public class Triangle implements Forme{
         // Apply the projection and view transformation
         GLES30.glUniformMatrix4fv(IdMVPMatrix, 1, false, mvpMatrix, 0);
 
-
         // get handle to vertex shader's vPosition member et vCouleur member
         IdPosition = GLES30.glGetAttribLocation(IdProgram, "vPosition");
         IdCouleur = GLES30.glGetAttribLocation(IdProgram, "vCouleur");
@@ -217,19 +214,13 @@ public class Triangle implements Forme{
                 GLES30.GL_FLOAT, false,
                 couleurStride, colorBuffer);
 
-
-
-
         // Draw the square
         GLES30.glDrawElements(
                 GLES30.GL_TRIANGLES, Indices.length,
                 GLES30.GL_UNSIGNED_SHORT, indiceBuffer);
 
-
         // Disable vertex array
         GLES30.glDisableVertexAttribArray(IdPosition);
         GLES30.glDisableVertexAttribArray(IdCouleur);
-
     }
-
 }

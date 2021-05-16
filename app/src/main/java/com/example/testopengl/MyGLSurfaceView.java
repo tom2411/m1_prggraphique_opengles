@@ -23,6 +23,8 @@ import android.view.MotionEvent;
 
 import com.example.testopengl.formes.Forme;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /* La classe MyGLSurfaceView avec en particulier la gestion des événements
@@ -55,6 +57,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     }
 
     private boolean isMelange = false;
+    private boolean enDeplacement = false;
 
     /* Comment interpréter les événements sur l'écran tactile */
     @Override
@@ -116,6 +119,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
         /*Log.d("message","test_square="+Boolean.toString(test_square));
         Log.d("message","condition="+Boolean.toString(condition));*/
 
+        List<Boolean> liste_case = new ArrayList<>(Arrays.asList(test_case1,test_case2,test_case3,test_case4,test_case5,test_case5,test_case6,test_case7,test_case8,test_case9));
+
         if (isMelange && (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9)) {
            switch (e.getAction()) {
                 case MotionEvent.ACTION_UP:
@@ -128,61 +133,98 @@ public class MyGLSurfaceView extends GLSurfaceView {
                             col = i % 3;
                         }
                     }
-                    Log.d("deplacement","case vide : lig: "+lig+" ,col: "+col );
-                    if (isMelange && test_case1 && this.mRenderer.getGame().mGrille().deplacementPossible(0,0)){
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if (liste_case.get(i*3+j) && this.mRenderer.getGame().mGrille().deplacementPossible(i,j)){
+                                mRenderer.getGame().mGrille().deplacement(i,j);
+                                requestRender();
+                            }else if (liste_case.get(i*3+j) && !this.mRenderer.getGame().mGrille().deplacementPossible(i,j)){
+                                clignotement(3);
+                            }
+                        }
+                    }
+
+                    /*if (isMelange && test_case1 && this.mRenderer.getGame().mGrille().deplacementPossible(0,0)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(0,0));
                         Log.d("deplacement", "case1");
                         mRenderer.getGame().mGrille().deplacement(0,0);
                         requestRender();
+                    }else if (isMelange && test_case1 && !this.mRenderer.getGame().mGrille().deplacementPossible(0,0)){
+                        Log.d("deplacement", "case1");
+                        clignotement(3);
                     }
                     if (isMelange && test_case2 && this.mRenderer.getGame().mGrille().deplacementPossible(0,1)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(0,1));
                         Log.d("deplacement", "case2");
                         mRenderer.getGame().mGrille().deplacement(0,1);
                         requestRender();
+                    }else if (isMelange && test_case2 && !this.mRenderer.getGame().mGrille().deplacementPossible(0,1)){
+                        Log.d("deplacement", "case2");
+                        clignotement(3);
                     }
                     if (isMelange && test_case3 && this.mRenderer.getGame().mGrille().deplacementPossible(0,2)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(0,2));
                         Log.d("deplacement", "case3");
                         mRenderer.getGame().mGrille().deplacement(0,2);
                         requestRender();
+                    } else if (isMelange && test_case3 && !this.mRenderer.getGame().mGrille().deplacementPossible(0,2)){
+                        Log.d("deplacement", "case3");
+                        clignotement(3);
                     }
-                    if ( isMelange && test_case4 && this.mRenderer.getGame().mGrille().deplacementPossible(1,0)){
+                    if (isMelange && test_case4 && this.mRenderer.getGame().mGrille().deplacementPossible(1,0)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(1,0));
                         Log.d("deplacement", "case4");
                         mRenderer.getGame().mGrille().deplacement(1,0);
                         requestRender();
+                    }else if (isMelange && test_case4 && !this.mRenderer.getGame().mGrille().deplacementPossible(1,0)){
+                        Log.d("deplacement", "case4");
+                        clignotement(3);
                     }
                     if (isMelange && test_case5 && this.mRenderer.getGame().mGrille().deplacementPossible(1,1)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(1,1));
                         Log.d("deplacement", "case5");
                         mRenderer.getGame().mGrille().deplacement(1,1);
                         requestRender();
+                    }else if (isMelange && test_case5 && !this.mRenderer.getGame().mGrille().deplacementPossible(1,1)){
+                        Log.d("deplacement", "case5");
+                        clignotement(3);
                     }
                     if (isMelange && test_case6 && this.mRenderer.getGame().mGrille().deplacementPossible(1,2)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(1,2));
                         Log.d("deplacement", "case6");
                         mRenderer.getGame().mGrille().deplacement(1,2);
                         requestRender();
+                    } else if (isMelange && test_case6 && !this.mRenderer.getGame().mGrille().deplacementPossible(1,2)){
+                        Log.d("deplacement", "case6");
+                        clignotement(3);
                     }
                     if (isMelange && test_case7 && this.mRenderer.getGame().mGrille().deplacementPossible(2,0)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(2,0));
                         Log.d("deplacement", "case7");
                         mRenderer.getGame().mGrille().deplacement(2,0);
                         requestRender();
+                    }else if (isMelange && test_case7 && !this.mRenderer.getGame().mGrille().deplacementPossible(2,0)){
+                        Log.d("deplacement", "case7");
+                        clignotement(3);
                     }
                     if (isMelange && test_case8 && this.mRenderer.getGame().mGrille().deplacementPossible(2,1)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(2,1));
                         Log.d("deplacement", "case8");
                         mRenderer.getGame().mGrille().deplacement(2,1);
                         requestRender();
+                    } else if (isMelange && test_case8 && !this.mRenderer.getGame().mGrille().deplacementPossible(2,1)){
+                        Log.d("deplacement", "case8");
+                        clignotement(3);
                     }
                     if (isMelange && test_case9 && this.mRenderer.getGame().mGrille().deplacementPossible(2,2)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(2,2));
                         Log.d("deplacement", "case9");
                         mRenderer.getGame().mGrille().deplacement(2,2);
                         requestRender();
-                    }
+                    }else if (isMelange && test_case9 && !this.mRenderer.getGame().mGrille().deplacementPossible(2,2)){
+                        Log.d("deplacement", "case9");
+                        clignotement(3);
+                    }*/
             }
         }
         if (!isMelange){
@@ -193,10 +235,24 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 isMelange = true;
                 requestRender();
             }
-
         }
-
         return true;
+    }
+
+
+    public void clignotement(int nbClignotement){
+        for (int i = 0; i < nbClignotement; i++) {
+            try {
+                this.mRenderer.getGame().setPlateauColors(1.f,0.0f,0.0f);
+                requestRender();
+                Thread.sleep(250);
+                this.mRenderer.getGame().setPlateauColors(0.93f,0.93f,0.82f);
+                requestRender();
+                Thread.sleep(250);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+        }
     }
 
 }

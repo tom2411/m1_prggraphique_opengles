@@ -24,7 +24,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
-import java.util.Arrays;
 
 //import android.opengl.GLES20;
 
@@ -131,8 +130,6 @@ public class Square implements Forme {
             squareColors[i+1] = green;
             squareColors[i+2] = blue;
         }
-
-
     }
 
     public float[] get_position(){
@@ -222,7 +219,5 @@ public class Square implements Forme {
         // Disable vertex array
         GLES30.glDisableVertexAttribArray(IdPosition);
         GLES30.glDisableVertexAttribArray(IdCouleur);
-
     }
-
 }

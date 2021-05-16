@@ -131,8 +131,6 @@ public class Losange implements Forme {
             losangeColors[i+1] = green;
             losangeColors[i+2] = blue;
         }
-
-
     }
 
     public float[] get_position(){
@@ -150,14 +148,12 @@ public class Losange implements Forme {
     }
     /* La fonction Display */
     public void draw(float[] mvpMatrix) {
-
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(losangeCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
         vertexBuffer = bb.asFloatBuffer();
         vertexBuffer.put(losangeCoords);
         vertexBuffer.position(0);
-
 
         // initialisation du buffer pour les couleurs (4 bytes par float)
         ByteBuffer bc = ByteBuffer.allocateDirect(losangeColors.length * 4);
@@ -196,7 +192,6 @@ public class Losange implements Forme {
         // Apply the projection and view transformation
         GLES30.glUniformMatrix4fv(IdMVPMatrix, 1, false, mvpMatrix, 0);
 
-
         // get handle to vertex shader's vPosition member et vCouleur member
         IdPosition = GLES30.glGetAttribLocation(IdProgram, "vPosition");
         IdCouleur = GLES30.glGetAttribLocation(IdProgram, "vCouleur");
@@ -216,19 +211,13 @@ public class Losange implements Forme {
                 GLES30.GL_FLOAT, false,
                 couleurStride, colorBuffer);
 
-
-
-
         // Draw the square
         GLES30.glDrawElements(
                 GLES30.GL_TRIANGLES, Indices.length,
                 GLES30.GL_UNSIGNED_SHORT, indiceBuffer);
 
-
         // Disable vertex array
         GLES30.glDisableVertexAttribArray(IdPosition);
         GLES30.glDisableVertexAttribArray(IdCouleur);
-
     }
-
 }

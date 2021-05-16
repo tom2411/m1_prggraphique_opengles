@@ -63,14 +63,14 @@ public class Plateau implements Forme {
 
     /* les déclarations pour l'équivalent des VBO */
 
-    private final FloatBuffer vertexBuffer; // Pour le buffer des coordonnées des sommets du carré
-    private final ShortBuffer indiceBuffer; // Pour le buffer des indices
-    private final FloatBuffer colorBuffer; // Pour le buffer des couleurs des sommets
+    private FloatBuffer vertexBuffer; // Pour le buffer des coordonnées des sommets du carré
+    private ShortBuffer indiceBuffer; // Pour le buffer des indices
+    private FloatBuffer colorBuffer; // Pour le buffer des couleurs des sommets
 
     /* les déclarations pour les shaders
     Identifiant du programme et pour les variables attribute ou uniform
      */
-    private final int IdProgram; // identifiant du programme pour lier les shaders
+    private int IdProgram; // identifiant du programme pour lier les shaders
     private int IdPosition; // idendifiant (location) pour transmettre les coordonnées au vertex shader
     private int IdCouleur; // identifiant (location) pour transmettre les couleurs
     private int IdMVPMatrix; // identifiant (location) pour transmettre la matrice PxVxM
@@ -85,13 +85,13 @@ public class Plateau implements Forme {
      Oui ce n'est pas joli avec 1.0 en dur ....
      */
 
-    static float plateauCoords[] = {
+    float plateauCoords[] = {
             -10.0f,   10.0f, 0.0f,
             -10.0f,  -10.0f, 0.0f,
             10.0f,  -10.0f, 0.0f,
             10.f,  10.0f, 0.0f };
     // Le tableau des couleurs
-    static float plateauColors[] = {
+    float plateauColors[] = {
             .93f, .93f, .82f, 1.0f,
             .93f, .93f, .82f, 1.0f,
             .93f, .93f, .82f, 1.0f,
@@ -106,8 +106,7 @@ public class Plateau implements Forme {
 
     private final float Position[] = {0.0f,0.0f};
 
-    public Plateau(float[] Pos) {
-
+    public Plateau(float[] Pos, float red, float green, float blue) {
         Position[0] = Pos[0];
         Position[1] = Pos[1];
         for (int i = 0; i < plateauCoords.length-1; i+=3) {
@@ -115,13 +114,44 @@ public class Plateau implements Forme {
             plateauCoords[i+1] += Position[1];
             System.out.println(i);
         }
+
+        for (int i = 0; i < plateauColors.length-1; i+=4) {
+            plateauColors[i] = red;
+            plateauColors[i+1] = green;
+            plateauColors[i+2] = blue;
+        }
+    }
+
+    public void setPlateauColors(float red, float green, float blue){
+        for (int i = 0; i < plateauColors.length-1; i+=4) {
+            plateauColors[i] = red;
+            plateauColors[i+1] = green;
+            plateauColors[i+2] = blue;
+        }
+    }
+
+    public void set_position(float[] pos) {
+        Position[0]=pos[0];
+        Position[1]=pos[1];
+    }
+
+    @Override
+    public float[] get_position() {
+        return this.Position;
+    }
+
+    public float[] getPlateauColors() {
+        return plateauColors;
+    }
+
+    /* La fonction Display */
+    public void draw(float[] mvpMatrix) {
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(plateauCoords.length * 4);
         bb.order(ByteOrder.nativeOrder());
         vertexBuffer = bb.asFloatBuffer();
         vertexBuffer.put(plateauCoords);
         vertexBuffer.position(0);
-
 
         // initialisation du buffer pour les couleurs (4 bytes par float)
         ByteBuffer bc = ByteBuffer.allocateDirect(plateauColors.length * 4);
@@ -151,22 +181,6 @@ public class Plateau implements Forme {
         GLES30.glLinkProgram(IdProgram);                  // create OpenGL program executables
         GLES30.glGetProgramiv(IdProgram, GLES30.GL_LINK_STATUS,linkStatus,0);
 
-
-    }
-
-
-    public void set_position(float[] pos) {
-        Position[0]=pos[0];
-        Position[1]=pos[1];
-    }
-
-    @Override
-    public float[] get_position() {
-        return this.Position;
-    }
-
-    /* La fonction Display */
-    public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment
         GLES30.glUseProgram(IdProgram);
 
@@ -175,7 +189,6 @@ public class Plateau implements Forme {
 
         // Apply the projection and view transformation
         GLES30.glUniformMatrix4fv(IdMVPMatrix, 1, false, mvpMatrix, 0);
-
 
         // get handle to vertex shader's vPosition member et vCouleur member
         IdPosition = GLES30.glGetAttribLocation(IdProgram, "vPosition");
@@ -196,19 +209,13 @@ public class Plateau implements Forme {
                 GLES30.GL_FLOAT, false,
                 couleurStride, colorBuffer);
 
-
-
-
         // Draw the square
         GLES30.glDrawElements(
                 GLES30.GL_TRIANGLES, Indices.length,
                 GLES30.GL_UNSIGNED_SHORT, indiceBuffer);
 
-
         // Disable vertex array
         GLES30.glDisableVertexAttribArray(IdPosition);
         GLES30.glDisableVertexAttribArray(IdCouleur);
-
     }
-
 }

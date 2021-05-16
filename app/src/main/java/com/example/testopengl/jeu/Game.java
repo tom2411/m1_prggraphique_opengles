@@ -1,5 +1,7 @@
 package com.example.testopengl.jeu;
 
+import android.util.Log;
+
 import com.example.testopengl.formes.Forme;
 import com.example.testopengl.formes.Losange;
 import com.example.testopengl.formes.Plateau;
@@ -46,7 +48,7 @@ public class Game {
 
     public Game() {
         /* on va définir une classe Square pour dessiner des carrés */
-        mPlateau = new Plateau(mPlateauPosition);
+        mPlateau = new Plateau(mPlateauPosition,0.93f,0.93f,0.82f);
 
         this.cases = new ArrayList<>(Arrays.asList(case1, case2, case3, case4, case5, case6, case7, case8, case9));
 
@@ -81,10 +83,16 @@ public class Game {
 
     public void dessinerJeu(float[] scratch) {
         mPlateau.draw(scratch);
+        Log.d("deplacement", "dessinerJeu: "+ Arrays.toString(mPlateau.getPlateauColors()));
         mGrille.dessinerFormes(scratch);
     }
 
     public float[] getmPlateauPosition() {
         return mPlateauPosition;
     }
+
+    public void setPlateauColors(float red, float green, float blue) {
+        mPlateau.setPlateauColors(red, green, blue);
+    }
+
 }
