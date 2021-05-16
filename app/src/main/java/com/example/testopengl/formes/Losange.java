@@ -89,9 +89,9 @@ public class Losange implements Forme {
     // tableau qui sert de mémoire à la forme pour quelle utilise toujours le repère
     // qui part de 0/ milieu de l'ecran
      float initLosangeCoords[] = {
-            0.0f,   1.0f, 0.0f,
+            0.0f,   2.0f, 0.0f,
             -1.0f,  0.0f, 0.0f,
-            0.0f,  -1.0f, 0.0f,
+            0.0f,  -2.0f, 0.0f,
             1.f,  0.f, 0.0f };
 
      float losangeCoords[] = {

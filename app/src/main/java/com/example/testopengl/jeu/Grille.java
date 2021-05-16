@@ -22,7 +22,7 @@ public class Grille implements Cloneable {
     public Grille(int largeurGrille, int hauteurGrille, ArrayList<Forme> liste_formes) {
         this.nbLignes = hauteurGrille;
         this.nbColonnes = largeurGrille; // si on a toujours des grilles carrées, on pourrait retirer le paramètre hauteurGrille
-        this.grille = liste_formes; // la liste des formes doit être de longueur (nombre de cases - 1)
+        this.grille = liste_formes; // la liste des formes doit être de longueur de largeur * longueur
     }
 
     /**
