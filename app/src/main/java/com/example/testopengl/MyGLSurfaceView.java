@@ -20,6 +20,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.example.testopengl.formes.Forme;
 
@@ -53,8 +54,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         // Option pour indiquer qu'on redessine uniquement si les données changent
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
-
-    private boolean isMelange = false;
 
     /* Comment interpréter les événements sur l'écran tactile */
     @Override
@@ -116,7 +115,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
         /*Log.d("message","test_square="+Boolean.toString(test_square));
         Log.d("message","condition="+Boolean.toString(condition));*/
 
-        if (isMelange && (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9)) {
+        if (this.mRenderer.getGame().isMelange() && (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9)) {
            switch (e.getAction()) {
                 case MotionEvent.ACTION_UP:
                     List<Forme> liste_forme = this.mRenderer.getGame().mGrille().getGrille();
@@ -129,69 +128,73 @@ public class MyGLSurfaceView extends GLSurfaceView {
                         }
                     }
                     Log.d("deplacement","case vide : lig: "+lig+" ,col: "+col );
-                    if (isMelange && test_case1 && this.mRenderer.getGame().mGrille().deplacementPossible(0,0)){
+                    if (this.mRenderer.getGame().isMelange() && test_case1 && this.mRenderer.getGame().mGrille().deplacementPossible(0,0)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(0,0));
                         Log.d("deplacement", "case1");
                         mRenderer.getGame().mGrille().deplacement(0,0);
                         requestRender();
                     }
-                    if (isMelange && test_case2 && this.mRenderer.getGame().mGrille().deplacementPossible(0,1)){
+                    if (this.mRenderer.getGame().isMelange() && test_case2 && this.mRenderer.getGame().mGrille().deplacementPossible(0,1)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(0,1));
                         Log.d("deplacement", "case2");
                         mRenderer.getGame().mGrille().deplacement(0,1);
                         requestRender();
                     }
-                    if (isMelange && test_case3 && this.mRenderer.getGame().mGrille().deplacementPossible(0,2)){
+                    if (this.mRenderer.getGame().isMelange() && test_case3 && this.mRenderer.getGame().mGrille().deplacementPossible(0,2)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(0,2));
                         Log.d("deplacement", "case3");
                         mRenderer.getGame().mGrille().deplacement(0,2);
                         requestRender();
                     }
-                    if ( isMelange && test_case4 && this.mRenderer.getGame().mGrille().deplacementPossible(1,0)){
+                    if (this.mRenderer.getGame().isMelange() && test_case4 && this.mRenderer.getGame().mGrille().deplacementPossible(1,0)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(1,0));
                         Log.d("deplacement", "case4");
                         mRenderer.getGame().mGrille().deplacement(1,0);
                         requestRender();
                     }
-                    if (isMelange && test_case5 && this.mRenderer.getGame().mGrille().deplacementPossible(1,1)){
+                    if (this.mRenderer.getGame().isMelange() && test_case5 && this.mRenderer.getGame().mGrille().deplacementPossible(1,1)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(1,1));
                         Log.d("deplacement", "case5");
                         mRenderer.getGame().mGrille().deplacement(1,1);
                         requestRender();
                     }
-                    if (isMelange && test_case6 && this.mRenderer.getGame().mGrille().deplacementPossible(1,2)){
+                    if (this.mRenderer.getGame().isMelange() && test_case6 && this.mRenderer.getGame().mGrille().deplacementPossible(1,2)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(1,2));
                         Log.d("deplacement", "case6");
                         mRenderer.getGame().mGrille().deplacement(1,2);
                         requestRender();
                     }
-                    if (isMelange && test_case7 && this.mRenderer.getGame().mGrille().deplacementPossible(2,0)){
+                    if (this.mRenderer.getGame().isMelange() && test_case7 && this.mRenderer.getGame().mGrille().deplacementPossible(2,0)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(2,0));
                         Log.d("deplacement", "case7");
                         mRenderer.getGame().mGrille().deplacement(2,0);
                         requestRender();
                     }
-                    if (isMelange && test_case8 && this.mRenderer.getGame().mGrille().deplacementPossible(2,1)){
+                    if (this.mRenderer.getGame().isMelange() && test_case8 && this.mRenderer.getGame().mGrille().deplacementPossible(2,1)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(2,1));
                         Log.d("deplacement", "case8");
                         mRenderer.getGame().mGrille().deplacement(2,1);
                         requestRender();
                     }
-                    if (isMelange && test_case9 && this.mRenderer.getGame().mGrille().deplacementPossible(2,2)){
+                    if (this.mRenderer.getGame().isMelange() && test_case9 && this.mRenderer.getGame().mGrille().deplacementPossible(2,2)){
                         Log.d("deplacement", "deplacement disponible : "+this.mRenderer.getGame().mGrille().deplacementPossible(2,2));
                         Log.d("deplacement", "case9");
                         mRenderer.getGame().mGrille().deplacement(2,2);
                         requestRender();
                     }
-                    Log.d("grille résolue ?", ""+this.mRenderer.getGame().isGrilleResolue());
+                    if (this.mRenderer.getGame().isGrilleResolue()) {
+                        Log.d("Game", "La partie est terminée");
+                        Toast.makeText(getContext(), "Félicitations ! cliquez n'importe où pour rejouer", Toast.LENGTH_LONG).show();
+                        this.mRenderer.getGame().setMelange(false);
+                    }
             }
         }
-        if (!isMelange){
+        else if (!this.mRenderer.getGame().isMelange()){
             if (e.getAction() == MotionEvent.ACTION_UP){
                 Log.d("Avant mélange", ""+mRenderer.getGame().mGrille().getGrille());
                 mRenderer.getGame().mGrille().melangerGrille(9);
                 Log.d("Après mélange", ""+mRenderer.getGame().mGrille().getGrille());
-                isMelange = true;
+                this.mRenderer.getGame().setMelange(true);
                 requestRender();
             }
 

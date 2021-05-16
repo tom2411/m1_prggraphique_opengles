@@ -98,5 +98,11 @@ public class Game {
         return (this.mGrille.equals(this.grilleNonMelangee));
     }
 
+    public boolean isMelange() {
+        return isMelange;
+    }
 
+    public void setMelange(boolean melange) {
+        isMelange = melange;
+    }
 }
