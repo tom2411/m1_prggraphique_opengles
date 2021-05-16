@@ -20,16 +20,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.util.Log;
 
-import com.example.testopengl.formes.Forme;
-import com.example.testopengl.formes.Losange;
-import com.example.testopengl.formes.Plateau;
-import com.example.testopengl.formes.Square;
-import com.example.testopengl.formes.Triangle;
 import com.example.testopengl.jeu.Game;
-import com.example.testopengl.jeu.Grille;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -48,8 +39,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     private final float[] mProjectionMatrix = new float[16];
     private final float[] mViewMatrix = new float[16];
     private final float[] mModelMatrix = new float[16];
-
-
 
     /* Première méthode équivalente à la fonction init en OpenGLSL */
     @Override

@@ -2,12 +2,7 @@ package com.example.testopengl.jeu;
 
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.example.testopengl.formes.Forme;
-import com.example.testopengl.formes.Losange;
-import com.example.testopengl.formes.Square;
-import com.example.testopengl.formes.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +72,12 @@ public class Grille implements Cloneable {
         return false;
     }
 
+    /**
+     * Permet les déplacements possible de la case vide
+     * @param ligne, un int qui représente la position en y de la case vide
+     * @param colonne, un int qui représente la position en x de la case vide
+     * @return une liste des déplacement possible
+     */
     public ArrayList<Integer> getDeplacementsPossiblesCaseVide(int ligne, int colonne) {
         ArrayList<Integer> deplacementsPossibles = new ArrayList<>();
         if (ligne != 0) { // on peut déplacer le vide vers le haut
@@ -265,14 +266,12 @@ public class Grille implements Cloneable {
                 Log.d("dessin", "null");
             }
         }
-        /*for (Forme forme: this.grille ) {
-            if (forme != null) {
-                Log.d("deplacement", "dessinerFormes: " + Arrays.toString(forme.get_position()));
-            }
-        }
-        Log.d("deplacement", "dessinerFormes: "+ this.grille);*/
     }
 
+    /**
+     * Permet de faire une copie plutot que des références
+     * @return un objet
+     */
     public Object clone() {
         ArrayList<Forme> grilleClone = new ArrayList<>();
         for (Forme f : this.grille) {
@@ -282,6 +281,9 @@ public class Grille implements Cloneable {
     }
 
     @Override
+    /**
+     * Permet de savoir si 2 objets sont identiques.
+     */
     public boolean equals(Object obj) {
         Grille autre = (Grille) obj;
         for (int i = 0; i < this.grille.size(); i++) {
