@@ -154,7 +154,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
     public void clignotement(int nbClignotement){
         for (int i = 0; i < nbClignotement; i++) {
             try {
-                this.mRenderer.getGame().setPlateauColors(1.f,0.0f,0.0f);
+                this.mRenderer.getGame().setPlateauColors(.87f,.43f,.08f);
                 requestRender();
                 Thread.sleep(250);
                 this.mRenderer.getGame().setPlateauColors(0.93f,0.93f,0.82f);
