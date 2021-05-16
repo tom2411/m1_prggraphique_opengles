@@ -8,7 +8,7 @@ Nous sommes partis du code de base donné en TD.
 
 
 
-## Qu'es ce que ça donne ?
+## Qu'est ce que ça donne ?
 
 Lorsque le joueur démarre l'application, le plateau de jeu s'affiche avec les formes dans leur position initiale. 
 
