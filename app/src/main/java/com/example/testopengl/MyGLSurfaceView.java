@@ -20,6 +20,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.example.testopengl.formes.Forme;
 
@@ -55,9 +56,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         // Option pour indiquer qu'on redessine uniquement si les données changent
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
-
-    private boolean isMelange = false;
-    private boolean enDeplacement = false;
 
     /* Comment interpréter les événements sur l'écran tactile */
     @Override
@@ -119,7 +117,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
         List<Boolean> liste_case = new ArrayList<>(Arrays.asList(test_case1,test_case2,test_case3,test_case4,test_case5,test_case6,test_case7,test_case8,test_case9));
 
-        if (isMelange && (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9)) {
+        if (this.mRenderer.getGame().isMelange() && (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9)) {
            switch (e.getAction()) {
                 case MotionEvent.ACTION_UP:
                     List<Forme> liste_forme = this.mRenderer.getGame().mGrille().getGrille();
@@ -138,12 +136,12 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
             }
         }
-        if (!isMelange){
+        if (!this.mRenderer.getGame().isMelange()){
             if (e.getAction() == MotionEvent.ACTION_UP){
                 Log.d("Avant mélange", ""+mRenderer.getGame().mGrille().getGrille());
                 mRenderer.getGame().mGrille().melangerGrille(9);
                 Log.d("Après mélange", ""+mRenderer.getGame().mGrille().getGrille());
-                isMelange = true;
+                this.mRenderer.getGame().setMelange(true);
                 requestRender();
             }
         }

@@ -2,13 +2,18 @@ package com.example.testopengl.jeu;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.example.testopengl.formes.Forme;
+import com.example.testopengl.formes.Losange;
+import com.example.testopengl.formes.Square;
+import com.example.testopengl.formes.Triangle;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Grille {
+public class Grille implements Cloneable {
     private List<Forme> grille;
     private final int nbLignes;
     private final int nbColonnes;
@@ -23,7 +28,6 @@ public class Grille {
         this.nbLignes = hauteurGrille;
         this.nbColonnes = largeurGrille; // si on a toujours des grilles carrées, on pourrait retirer le paramètre hauteurGrille
         this.grille = liste_formes; // la liste des formes doit être de longueur (nombre de cases - 1)
-        this.grille.add(null); // la dernière case (en bas à droite) est vide
     }
 
     /**
@@ -267,5 +271,32 @@ public class Grille {
             }
         }
         Log.d("deplacement", "dessinerFormes: "+ this.grille);*/
+    }
+
+    public Object clone() {
+        ArrayList<Forme> grilleClone = new ArrayList<>();
+        for (Forme f : this.grille) {
+            grilleClone.add(f);
+        }
+        return new Grille(this.nbColonnes, this.nbLignes, grilleClone);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Grille autre = (Grille) obj;
+        for (int i = 0; i < this.grille.size(); i++) {
+            if (this.grille.get(i) == null) {
+                if (autre.getGrille().get(i) != null) {
+                    return false;
+                }
+            } else if (autre.getGrille().get(i) == null) {
+                if (this.grille.get(i) != null) {
+                    return false;
+                }
+            } else if (!this.grille.get(i).equals(autre.getGrille().get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }
