@@ -4,7 +4,72 @@ Développé par Pierre-Louis Bertrand et Tom Ribardière
 
 ## Développement de l'application
 
-Nous sommes partis du code de base donné en TD.
+Nous sommes partis du code de base donné en TD et nous avons plein de test pour vraiment un carré et non un ovale ou un rectangle.
+
+Ensuite, nous avons commencé par faire quelques tests avec le code du carre que l'on nous avais donné. Puis nous avons commencé par la création des différentes formes que nous allions utiliser dans ce taquin. Nous avons fais des tests du différentes formes tel que les triangles ronds et autres. Cependant nous avons eut quelques problèmes avec le rond donc nous avons décider de ne pas l'utiliser et de nous contenter des 3 formes que nous avions déjà qui étaient :
+- le carré
+- le triange 
+- le losange
+
+Par la suite nous nous sommes également basé sur le dessin du taquin qui nous était fournis avec le sujet pour faire un plateau en arrière plan du jeu.
+Pour le faire nous avons juste repris le code du carré et fait des test avec la taille même de ce carré.
+
+Une fois que nous avions toutes nos formes et que nous avions testé leurs affichage individuel. Nous avons essayer de réprésenter en dure dans le code une sorte de grille de forme pour testé le positionnement des différentes formes. Cependant, c'est à ce moment que l'on c'est rendu compte que l'on devait placé les formes en fonction des formes précédentes que nous avions déjà affichées.
+
+Nous avons donc cherché un moyen qui nous permettait d'avoir le même repère pour toutes le formes et que le repère ne change pas. Au boout d'un certain temps, voici ce que à nous sommes convenu :
+
+```java
+
+float initSquareCoords[] = {
+        -1.0f,   1.0f, 0.0f,
+        -1.0f,  -1.0f, 0.0f,
+        1.0f,  -1.0f, 0.0f,
+        1.0f,  1.0f, 0.0f };
+        2.
+float squareCoords[] = {
+        -1.0f,   1.0f, 0.0f,
+        -1.0f,  -1.0f, 0.0f,
+        1.0f,  -1.0f, 0.0f,
+        1.0f,  1.0f, 0.0f };
+        2.
+public Square(float[] Pos, float red, float green, float blue) {
+        this.Position[0] = Pos[0];
+        this.Position[1] = Pos[1];
+        for (int i = 0; i < squareCoords.length-1; i+=3) {
+            squareCoords[i] = initSquareCoords[i] + this.Position[0];
+            squareCoords[i+1] = initSquareCoords[i+1] + this.Position[1];
+        }
+```
+
+Nous avons donc 2 variables qui sont déclarées et initialisées aux même valeur, cependant nous avons le tableau `initSquareCoords` qui nous sert de tableau de référence et qui est centré sur le point de coordonnées (0,0). Nous avons ensuite, le tableau `squareCoords` qui nous sert à représenter les coordonnées actuelles  du carré. Dans le constructeur du carré nous créons un lien entre la position que nous mettons en paramètre du constructeur et les 2 tableaux, ce qui nous permet d'avoir des positions centrées par rapport à (0,0). Nous avons reproduit cette méthode sur toutes les formes que l'on utilise pour que le système de positionnement soit le plus homogène et simple possible.
+
+Un fois ce promblème résolu nous avons pu facilement mettre en place un grille en "dur" avec toutes les formes qu'il nous fallait
+
+Ensuite nous nous sommes penchés sur la structuration du code du jeu, c'est-à-dire du taquin. Nous avons parlés de plusieurs conceptions possibles et réalisables mais nous nous sommes accordés sur cette conception de grille.
+
+```java
+    private List<Forme> grille;
+    private final int nbLignes;
+    private final int nbColonnes;
+
+    public Grille(int largeurGrille, int hauteurGrille, ArrayList<Forme> liste_formes) {
+        this.nbLignes = hauteurGrille;
+        this.nbColonnes = largeurGrille; // si on a toujours des grilles carrées, on pourrait retirer le paramètre hauteurGrille
+        this.grille = liste_formes; // la liste des formes doit être de longueur (nombre de cases - 1)
+    }
+```
+
+Après avoir mis en place cette grille, il a fallut que nous mettions en place la synchronisation de la création de grille et le positionnement de chaque formes avec OpenGL. Ce fut mis en place assez rapidement et nous sommes donc passé aux déplacement possible dans le jeu du taquin.
+
+Nous avons commencé par la logique de ces differents déplacements, c'est-à-dire que nous avons commencé par coder les movements sans nous occuper de l'affichage.
+D'ailleurs vous pouvez retrouver les différentes fonctions de déplacements que nous avons faient dans le fichier Grille.java.
+Puis une fois les déplacements logique mis en place nous sommes passé sur l'affichage de ces mouvements, ce qui n'a pas été de tous repos et qui nous a obligé à modifier quelque peu notre code.
+Après quelques temps et quelques craquages, nous avons enfin réussi à afficher les déplacements du jeu en fonction des déplacements possibles.
+
+Il ne nous restait plus que de pouvoir savori si l'on avait fini le jeu, et de donner des informations au joueur sur les déplacements possibles ou impossibles et sur l'avancement de la partie.
+
+Pour l'état final de la partie, nous avons gardé en mémore une grille non mélangé et nous testons à chaque déplacement si la grille est la grille finale.
+Pour ce qui est des informations que l'on doit fournir à l'utilisateur, nous nous sommes contentés de mettre des toasts pour l'avertir de l'avancement du jeu et nous avons créer une fonction qui nous permet de faire clignoter notre plateau pour lui indiquer qu'un cout n'est pas valide et donc ne peut pas être joué. 
 
 
 
