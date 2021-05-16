@@ -59,19 +59,15 @@ public class Grille {
         // il faut qu'on ne soit pas dans la ligne la plus haute
         // et qu'il n'y ait rien dans la case au dessus
         if (ligne != 0 && getFormeParLigneColonne(ligne - 1, colonne) == null) {
-            //this.deplacementHaut(ligne, colonne);
             return true;
         }
         if (ligne != nbLignes - 1 && getFormeParLigneColonne(ligne + 1, colonne) == null) {
-            //this.deplacementBas(ligne, colonne);
             return true;
         }
         if (colonne != nbColonnes - 1 && getFormeParLigneColonne(ligne, colonne + 1) == null) {
-            //this.deplacementDroite(ligne, colonne);
             return true;
         }
         if (colonne != 0 && getFormeParLigneColonne(ligne, colonne - 1) == null) {
-            //this.deplacementGauche(ligne, colonne);
             return true;
         }
         return false;
@@ -130,12 +126,15 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig-1, col);
         this.setFormeParLigneColonne(lig, col, formeDestination); // et on la retire de la case actuelle
         this.setFormeParLigneColonne(lig-1, col, formeSource); // on met dans la forme dans la case au-dessus
-        if (lig >= 0 && formeSource != null){
-            Log.d("deplacement", formeSource.toString());
-            float[] test = {formeSource.get_position()[0],formeSource.get_position()[1]+6.5f};
-            formeSource.set_position(test);
-        }
 
+        if (formeSource != null) {
+            float[] nouvellesCoordsFormeSource = {formeSource.get_position()[0],formeSource.get_position()[1]+6.5f};
+            formeSource.set_position(nouvellesCoordsFormeSource);
+        } else if (formeDestination != null) {
+            float[] nouvellesCoordsFormeDestination = {formeDestination.get_position()[0],formeDestination.get_position()[1]-6.5f};
+            formeDestination.set_position(nouvellesCoordsFormeDestination);
+        }
+        Log.d("deplacement", "haut");
     }
 
     /**
@@ -148,11 +147,15 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig+1, col);
         this.setFormeParLigneColonne(lig, col, formeDestination);
         this.setFormeParLigneColonne(lig+1, col, formeSource);
-        if (lig <= 2 && formeSource != null){
+
+        if (formeSource != null){
             float[] test = {formeSource.get_position()[0],formeSource.get_position()[1]-6.5f};
             formeSource.set_position(test);
+        } else if (formeDestination != null) {
+            float[] test = {formeDestination.get_position()[0],formeDestination.get_position()[1]+6.5f};
+            formeDestination.set_position(test);
         }
-
+        Log.d("deplacement", "bas");
     }
 
     /**
@@ -165,10 +168,15 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig, col+1);
         this.setFormeParLigneColonne(lig, col, formeDestination);
         this.setFormeParLigneColonne(lig, col+1, formeSource);
-        if (col <= 2 && formeSource != null){
+
+        if (formeSource != null){
             float[] test = {formeSource.get_position()[0]+7.0f,formeSource.get_position()[1]};
             formeSource.set_position(test);
+        } else if (formeDestination != null) {
+            float[] test = {formeDestination.get_position()[0]-7.0f,formeDestination.get_position()[1]};
+            formeDestination.set_position(test);
         }
+        Log.d("deplacement", "droite");
     }
 
     /**
@@ -181,11 +189,15 @@ public class Grille {
         Forme formeDestination = this.getFormeParLigneColonne(lig, col-1);
         this.setFormeParLigneColonne(lig, col, formeDestination);
         this.setFormeParLigneColonne(lig, col-1, formeSource);
-        if (col >= 0 && formeSource != null){
-            Log.d("deplacement", formeSource.toString());
-            float[] test = {formeSource.get_position()[0]-7.0f,formeSource.get_position()[1]};
-            formeSource.set_position(test);
+
+        if (formeSource != null) {
+            float[] nouvellesCoordsFormeSource = {formeSource.get_position()[0]-7.0f,formeSource.get_position()[1]};
+            formeSource.set_position(nouvellesCoordsFormeSource);
+        } else if (formeDestination != null) {
+            float[] nouvellesCoordsFormeDestination = {formeDestination.get_position()[0]+7.0f,formeDestination.get_position()[1]};
+            formeDestination.set_position(nouvellesCoordsFormeDestination);
         }
+        Log.d("deplacement", "gauche");
     }
 
     /**
@@ -245,6 +257,8 @@ public class Grille {
             if (forme != null) {
                 Log.d("dessin", forme.toString());
                 forme.draw(scratch);
+            } else {
+                Log.d("dessin", "null");
             }
         }
         /*for (Forme forme: this.grille ) {

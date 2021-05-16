@@ -188,13 +188,13 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     }
             }
         }
-        if (!isMelange && (test_case1 || test_case2 || test_case3 || test_case4 || test_case5 || test_case6 || test_case7 || test_case8 || test_case9)){
-            switch (e.getAction()){
-                case MotionEvent.ACTION_UP:
-                    mRenderer.mGrille().melangerGrille(1);
-                    Log.d("deplacement", ""+mRenderer.mGrille().getGrille());
-                    isMelange = true;
-                    requestRender();
+        if (!isMelange){
+            if (e.getAction() == MotionEvent.ACTION_UP){
+                Log.d("Avant mélange", ""+mRenderer.mGrille().getGrille());
+                mRenderer.mGrille().melangerGrille(9);
+                Log.d("Après mélange", ""+mRenderer.mGrille().getGrille());
+                isMelange = true;
+                requestRender();
             }
 
         }
