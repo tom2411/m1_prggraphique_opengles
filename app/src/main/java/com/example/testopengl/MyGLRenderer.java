@@ -31,6 +31,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private static final String TAG = "MyGLRenderer";
 
+    // notre objet qui représente le taquin
     private Game game;
 
     // Les matrices habituelles Model/View/Projection
@@ -47,6 +48,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // la couleur du fond d'écran
         GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+        // création d'un nouveau taquin
         this.game = new Game();
 
     }
@@ -122,10 +124,18 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         return shader;
     }
 
+    /**
+     * Permet de savoir la position du plateau de notre taquin
+     * @return, un tableau de float qui sont les coordonées du plateau
+     */
     public float[] getPosition() {
         return this.game.getmPlateauPosition();
     }
 
+    /**
+     * Permet de récupérer le jeu/taquin
+     * @return, un jeu/taquin
+     */
     public Game getGame() {
         return game;
     }
