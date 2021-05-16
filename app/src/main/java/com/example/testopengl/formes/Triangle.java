@@ -18,8 +18,6 @@ package com.example.testopengl.formes;
 import android.opengl.GLES30;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.example.testopengl.MyGLRenderer;
 
 import java.nio.ByteBuffer;
@@ -128,6 +126,7 @@ public class Triangle implements Forme{
             triangleCoords[i+1] = initTriangleCoords[i+1] + Position[1];
         }
 
+        // Mise en place de la couleur du Plateau (carré mais plus gros)
         for (int i = 0; i < triangleColors.length-1; i+=4) {
             triangleColors[i] = red;
             triangleColors[i+1] = green;
@@ -135,7 +134,10 @@ public class Triangle implements Forme{
         }
     }
 
-
+    /**
+     * Permet de changer la position de notre carre
+     * @param pos, un tableau de float qui représente les nouvelles coordonnées du carre
+     */
     public void set_position(float[] pos) {
         for (int i = 0; i < triangleCoords.length-1; i+=3) {
             triangleCoords[i] = initTriangleCoords[i] + pos[0];
@@ -147,11 +149,18 @@ public class Triangle implements Forme{
     }
 
     @Override
+    /**
+     * Permet de récupérer la position du plateau
+     */
     public float[] get_position() {
             return this.Position;
     }
 
-    /* La fonction Display */
+    /**
+     * Permet d'initialiser les différents objets OpenGL (VBO, VAO, etc) dont nous avons besoin
+     * et de dessiner un carre
+     * @param mvpMatrix, la matrice ModelViewProjection qui est notre scène qui est affiché
+     */
     public void draw(float[] mvpMatrix) {
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(triangleCoords.length * 4);

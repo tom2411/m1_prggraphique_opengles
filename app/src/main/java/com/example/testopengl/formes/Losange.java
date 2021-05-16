@@ -126,6 +126,7 @@ public class Losange implements Forme {
             losangeCoords[i+1] = initLosangeCoords[i+1] + Position[1];
         }
 
+        // Mise en place de la couleur du losange
         for (int i = 0; i < losangeColors.length-1; i+=4) {
             losangeColors[i] = red;
             losangeColors[i+1] = green;
@@ -133,6 +134,11 @@ public class Losange implements Forme {
         }
     }
 
+    /**
+     * Permet de récupérer la position du losange selon le point (0,0)
+     * @return un tableau de float avec le premier élement qui représente la coordonnée x et
+     * le second qui représente la coordonnée y
+     */
     public float[] get_position(){
         return this.Position;
     }
@@ -146,7 +152,12 @@ public class Losange implements Forme {
         Position[0]=pos[0];
         Position[1]=pos[1];
     }
-    /* La fonction Display */
+
+    /**
+     * Permet d'initialiser les différents objets OpenGL (VBO, VAO, etc) dont nous avons besoin
+     * et de dessiner un losange
+     * @param mvpMatrix, la matrice ModelViewProjection qui est notre scène qui est affiché
+     */
     public void draw(float[] mvpMatrix) {
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(losangeCoords.length * 4);

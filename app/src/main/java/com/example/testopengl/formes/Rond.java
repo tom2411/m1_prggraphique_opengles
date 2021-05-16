@@ -107,7 +107,8 @@ public class Rond implements Forme {
     private final float Position[] = {0.0f,0.0f};
 
     public Rond(float[] Pos) {
-
+        // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
+        // avec le repère du milieu l'écran
         Position[0] = Pos[0];
         Position[1] = Pos[1];
         for (int i = 0; i < rondCoords.length-1; i+=3) {
@@ -154,17 +155,28 @@ public class Rond implements Forme {
     }
 
 
+    /**
+     * Permet de changer la position de notre rond
+     * @param pos, un tableau de float qui représente les nouvelles coordonnées du rond
+     */
     public void set_position(float[] pos) {
         Position[0]=pos[0];
         Position[1]=pos[1];
     }
 
     @Override
+    /**
+     * Permet de récupérer la position du plateau
+     */
     public float[] get_position() {
             return this.Position;
     }
 
-    /* La fonction Display */
+    /**
+     * Permet d'initialiser les différents objets OpenGL (VBO, VAO, etc) dont nous avons besoin
+     * et de dessiner un rond
+     * @param mvpMatrix, la matrice ModelViewProjection qui est notre scène qui est affiché
+     */
     public void draw(float[] mvpMatrix) {
         // Add program to OpenGL environment
         GLES30.glUseProgram(IdProgram);

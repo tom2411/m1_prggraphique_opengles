@@ -107,6 +107,8 @@ public class Plateau implements Forme {
     private final float Position[] = {0.0f,0.0f};
 
     public Plateau(float[] Pos, float red, float green, float blue) {
+        // positionnnement de la forme en fonction du paramètre du constructeur et de sa position initial
+        // avec le repère du milieu l'écran
         Position[0] = Pos[0];
         Position[1] = Pos[1];
         for (int i = 0; i < plateauCoords.length-1; i+=3) {
@@ -114,7 +116,7 @@ public class Plateau implements Forme {
             plateauCoords[i+1] += Position[1];
             System.out.println(i);
         }
-
+        // Mise en place de la couleur du Plateau (carré mais plus gros)
         for (int i = 0; i < plateauColors.length-1; i+=4) {
             plateauColors[i] = red;
             plateauColors[i+1] = green;
@@ -122,6 +124,12 @@ public class Plateau implements Forme {
         }
     }
 
+    /**
+     * Permet d'affecter d'autre couleur au plateau
+     * @param red, un float qui représente l'intensité du pixel rouge
+     * @param green, un float qui représente l'intensité du pixel vert
+     * @param blue, un float qui représente l'intensité du pixel bleu
+     */
     public void setPlateauColors(float red, float green, float blue){
         for (int i = 0; i < plateauColors.length-1; i+=4) {
             plateauColors[i] = red;
@@ -130,21 +138,37 @@ public class Plateau implements Forme {
         }
     }
 
+    /**
+     * Permet de changer la position de notre plateau
+     * @param pos, un tableau de float qui représente les nouvelles coordonnées du plateau
+     */
     public void set_position(float[] pos) {
         Position[0]=pos[0];
         Position[1]=pos[1];
     }
 
     @Override
+    /**
+     * Permet de récupérer la position du plateau
+     */
     public float[] get_position() {
         return this.Position;
     }
 
+    /**
+     * Permet de récupérer les couleurs du plateau
+     * @return un tableau de float qui représente l'intensité des composantes des pixels
+     * pour chaque sommet
+     */
     public float[] getPlateauColors() {
         return plateauColors;
     }
 
-    /* La fonction Display */
+    /**
+     * Permet d'initialiser les différents objets OpenGL (VBO, VAO, etc) dont nous avons besoin
+     * et de dessiner un Plateau
+     * @param mvpMatrix, la matrice ModelViewProjection qui est notre scène qui est affiché
+     */
     public void draw(float[] mvpMatrix) {
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(plateauCoords.length * 4);

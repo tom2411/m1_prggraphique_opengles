@@ -124,7 +124,7 @@ public class Square implements Forme {
             squareCoords[i] = initSquareCoords[i] + this.Position[0];
             squareCoords[i+1] = initSquareCoords[i+1] + this.Position[1];
         }
-
+        // Mise en place de la couleur du Plateau (carré mais plus gros)
         for (int i = 0; i < squareColors.length-1; i+=4) {
             squareColors[i] = red;
             squareColors[i+1] = green;
@@ -132,10 +132,17 @@ public class Square implements Forme {
         }
     }
 
+    /**
+     * Permet de récupérer la position du plateau
+     */
     public float[] get_position(){
         return this.Position;
     }
 
+    /**
+     * Permet de changer la position de notre carre
+     * @param pos, un tableau de float qui représente les nouvelles coordonnées du carre
+     */
     public void set_position(float[] pos) {
         for (int i = 0; i < squareCoords.length-1; i+=3) {
             squareCoords[i] = initSquareCoords[i] + pos[0];
@@ -146,7 +153,12 @@ public class Square implements Forme {
         Position[0]=pos[0];
         Position[1]=pos[1];
     }
-    /* La fonction Display */
+
+    /**
+     * Permet d'initialiser les différents objets OpenGL (VBO, VAO, etc) dont nous avons besoin
+     * et de dessiner un carre
+     * @param mvpMatrix, la matrice ModelViewProjection qui est notre scène qui est affiché
+     */
     public void draw(float[] mvpMatrix) {
         // initialisation du buffer pour les vertex (4 bytes par float)
         ByteBuffer bb = ByteBuffer.allocateDirect(squareCoords.length * 4);
