@@ -133,10 +133,15 @@ public class MyGLSurfaceView extends GLSurfaceView {
                             break;
                         }
                     }
+                    if (this.mRenderer.getGame().isGrilleResolue()) {
+                        Log.d("Game", "La partie est terminée");
+                        Toast.makeText(getContext(), "Félicitations ! cliquez n'importe où pour rejouer", Toast.LENGTH_LONG).show();
+                        this.mRenderer.getGame().setMelange(false);
+                    }
 
             }
         }
-        if (!this.mRenderer.getGame().isMelange()){
+        else if (!this.mRenderer.getGame().isMelange()){
             if (e.getAction() == MotionEvent.ACTION_UP){
                 Log.d("Avant mélange", ""+mRenderer.getGame().mGrille().getGrille());
                 mRenderer.getGame().mGrille().melangerGrille(9);
