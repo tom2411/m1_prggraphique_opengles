@@ -26,7 +26,11 @@ public class Game {
 
     private Grille mGrille;
 
+    private Grille grilleNonMelangee;
+
     private float[] mPlateauPosition = {0.0f, 0.0f};
+
+    private boolean isMelange = false;
 
     // Coordonnées des cases de la matrice pour le placement des formes
     // à la création de la grille
@@ -61,14 +65,16 @@ public class Game {
         this.triangle1 = new Triangle(case7, 1f, 0f, 0f);
         this.triangle2 = new Triangle(case8, 0f, 1f, 0f);
 
-        ArrayList<Forme> liste_forme = new ArrayList<>(Arrays.asList(losange1,losange2,losange3,carre1,carre2,carre3,triangle1,triangle2));
-        mGrille = new Grille(3,3, liste_forme);
+        ArrayList<Forme> liste_forme = new ArrayList<>(Arrays.asList(losange1,losange2,losange3,carre1,carre2,carre3,triangle1,triangle2,null));
+        this.mGrille = new Grille(3,3, liste_forme);
 
         for (int i = 0; i < 9; i++) {
             if (mGrille.getGrille().get(i) != null) {
                 mGrille.getGrille().get(i).set_position(this.cases.get(i));
             }
         }
+
+        this.grilleNonMelangee = (Grille) this.mGrille.clone();
     }
 
     public Grille mGrille() {
@@ -87,4 +93,10 @@ public class Game {
     public float[] getmPlateauPosition() {
         return mPlateauPosition;
     }
+
+    public boolean isGrilleResolue() {
+        return (this.mGrille.equals(this.grilleNonMelangee));
+    }
+
+
 }

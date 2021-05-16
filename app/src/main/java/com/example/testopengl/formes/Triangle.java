@@ -18,6 +18,8 @@ package com.example.testopengl.formes;
 import android.opengl.GLES30;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.example.testopengl.MyGLRenderer;
 
 import java.nio.ByteBuffer;

@@ -183,6 +183,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                         mRenderer.getGame().mGrille().deplacement(2,2);
                         requestRender();
                     }
+                    Log.d("grille résolue ?", ""+this.mRenderer.getGame().isGrilleResolue());
             }
         }
         if (!isMelange){
