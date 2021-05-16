@@ -129,13 +129,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
                             requestRender();
                             break;
                         } else if (liste_case.get(i) && !this.mRenderer.getGame().mGrille().deplacementPossible(i/3, i%3)){
+                            Toast.makeText(getContext(), "Il est impossible de déplacer cette forme !", Toast.LENGTH_SHORT).show();
                             clignotement(2);
                             break;
                         }
                     }
                     if (this.mRenderer.getGame().isGrilleResolue()) {
                         Log.d("Game", "La partie est terminée");
-                        Toast.makeText(getContext(), "Félicitations ! cliquez n'importe où pour rejouer", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Félicitations ! \nCliquez n'importe où pour rejouer", Toast.LENGTH_LONG).show();
                         this.mRenderer.getGame().setMelange(false);
                     }
 
@@ -147,6 +148,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 mRenderer.getGame().mGrille().melangerGrille(9);
                 Log.d("Après mélange", ""+mRenderer.getGame().mGrille().getGrille());
                 this.mRenderer.getGame().setMelange(true);
+                Toast.makeText(getContext(), "La grille est mélangée, bon courage !", Toast.LENGTH_SHORT).show();
                 requestRender();
             }
         }
