@@ -17,6 +17,7 @@
 package com.example.testopengl;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -119,6 +120,8 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     for (int i = 0; i < liste_case.size(); i++) {
                         // Si la case i à été touché et que un déplacement est possible
                         if (liste_case.get(i) && this.mRenderer.getGame().mGrille().deplacementPossible(i/3, i%3)) {
+                            MediaPlayer media = MediaPlayer.create(getContext(), R.raw.move);
+                            media.start();
                             // echanger la forme avec la case vide
                             mRenderer.getGame().mGrille().deplacement(i/3, i%3);
                             requestRender(); // mise à jour de l'affichage
@@ -134,6 +137,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     }
                     // Si le jeu est résolue
                     if (this.mRenderer.getGame().isGrilleResolue()) {
+                        MediaPlayer media = MediaPlayer.create(getContext(), R.raw.caught_a_pokemon);
+                        media.start();
+
+
                         Log.d("Game", "La partie est terminée");
                         // afficher un toast
                         Toast.makeText(getContext(), "Félicitations ! \nCliquez n'importe où pour rejouer", Toast.LENGTH_LONG).show();
