@@ -1,6 +1,6 @@
 # Projet Taquin en OpenGL ES (Android)
 
-Développé par Pierre-Louis Bertrand et Tom Ribardière
+Développé par Pierre-Louis Bertrand et Tom Ribardière sur le [répository git](https://github.com/tom2411/m1_prggraphique_opengles)
 
 ## Développement de l'application
 
