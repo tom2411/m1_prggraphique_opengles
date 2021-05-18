@@ -66,10 +66,39 @@ D'ailleurs vous pouvez retrouver les différentes fonctions de déplacements que
 Puis une fois les déplacements logiques mis en place nous sommes passé sur l'affichage de ces mouvements, ce qui n'a pas été de tout repos et qui nous a obligé à modifier quelque peu notre code.
 Après quelques temps et quelques craquages, nous avons enfin réussi à afficher les déplacements du jeu en fonction des déplacements possibles.
 
+Nous avions également besoin de créer une fonction qui nous permetterais de mélanger la grille avec des déplacements possibles aléatoires, pour que le jeu soit toujours solvable.
+
+Nous avons choisi de ne faire qu'un mélange de 9 déplacements pour que l'on puisse tester toutes les fonctionnalités que nous étions en train de développer.
+Ce nombre de déplacement àléatoire se trouve dans le SurfaceView et peut être modifier à votre guise.
+
+```java
+else if (!this.mRenderer.getGame().isMelange()){
+    // si on touche l'écran
+    if (e.getAction() == MotionEvent.ACTION_UP){
+        Log.d("Avant mélange", ""+mRenderer.getGame().mGrille().getGrille());
+        // on fait des déplacements possible x fois
+        mRenderer.getGame().mGrille().melangerGrille(9);
+        Log.d("Après mélange", ""+mRenderer.getGame().mGrille().getGrille());
+        this.mRenderer.getGame().setMelange(true); // on met à jour le boolean de mélange
+        Toast.makeText(getContext(), "La grille est mélangée, bon courage !", Toast.LENGTH_SHORT).show();
+        requestRender();// on met à jour l'affichage
+    }
+}
+```
+
 Il ne nous restait plus que de pouvoir savoir si l'on avait fini le jeu, et de donner des informations au joueur sur les déplacements possibles ou impossibles et sur l'avancement de la partie.
 
 Pour l'état final de la partie, nous avons gardé en mémoire une grille non mélangée et nous testons à chaque déplacement si la grille est égale à la grille finale.
 Pour ce qui est des informations que l'on doit fournir à l'utilisateur, nous nous sommes contentés de mettre des toasts pour l'avertir de l'avancement du jeu et nous avons créer une fonction qui nous permet de faire clignoter notre plateau pour lui indiquer qu'un coup n'est pas valide et donc ne peut pas être joué. 
+
+## Bonus
+
+Nous avons décider de rajouter des sons quand certaines actions étaient déclanchées comme par exemple la victoire d'une partie ou juste le déplacement d'une forme. Nous nous sommes servis de ce que Android Studio nous fournissait de base, c'est-à-dire du MediaPlayer. Voici un aperçu de notre code.
+
+```java
+MediaPlayer media = MediaPlayer.create(getContext(), R.raw.caught_a_pokemon);
+media.start();
+```
 
 ## Qu'est ce que ça donne ?
 
@@ -101,3 +130,4 @@ Lorsque le joueur a réussi à réarranger les formes pour que la grille soit da
 ## Bugs connus
 
 - Quand on clique plein de fois sur une case où le déplacement est impossible, les clignotements sont joués à la suite et l'application crashe au bout d'un moment
+- Pour les différents sons, nous avons un problème qui est que plusieurs clips audios puissent se jouer en même temps se qui cause un léger brouhaha. De plus de temps en temps les clips ne se jouent pas mais nous savons pas pourquoi.
